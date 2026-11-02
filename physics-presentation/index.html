@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYSICS PRESENTATION — สรุปฟิสิกส์ ม.4–ม.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  chtml: { scale: 1.0 },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root{
+  --bg:#04060e;
+  --cyan:#22d3ee;
+  --blue:#3b82f6;
+  --violet:#a78bfa;
+  --pink:#e879f9;
+  --text:#e8f1ff;
+  --muted:#8fa3c8;
+  --glass:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.015));
+  --stroke:rgba(130,175,255,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Sarabun',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.kanit{font-family:'Kanit',sans-serif}
+
+/* ---------- animated background ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg .glow1,.bg .glow2,.bg .glow3{position:absolute;border-radius:50%;filter:blur(110px);opacity:.5}
+.bg .glow1{width:56vw;height:56vw;left:-14vw;top:-18vw;background:radial-gradient(circle,rgba(34,100,255,.28),transparent 62%);animation:drift1 26s ease-in-out infinite alternate}
+.bg .glow2{width:44vw;height:44vw;right:-12vw;bottom:-16vw;background:radial-gradient(circle,rgba(168,85,247,.22),transparent 62%);animation:drift2 32s ease-in-out infinite alternate}
+.bg .glow3{width:30vw;height:30vw;left:38vw;top:52vw;background:radial-gradient(circle,rgba(34,211,238,.16),transparent 62%);animation:drift1 40s ease-in-out infinite alternate-reverse}
+@keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(7vw,5vw) scale(1.15)}}
+@keyframes drift2{from{transform:translate(0,0) scale(1.1)}to{transform:translate(-6vw,-6vw) scale(.95)}}
+.bg .grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(120,170,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.05) 1px,transparent 1px);
+  background-size:68px 68px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 30%,transparent 75%);
+  mask-image:radial-gradient(ellipse at 50% 40%,#000 30%,transparent 75%)}
+.bg .stars{position:absolute;inset:0}
+.bg .stars span{position:absolute;width:2px;height:2px;border-radius:50%;background:#bfe8ff;opacity:.55;animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.75}}
+
+/* ---------- progress bar ---------- */
+#progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:80;
+  background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet));
+  box-shadow:0 0 14px rgba(34,211,238,.8);transition:width .45s ease}
+
+/* ---------- deck / slides ---------- */
+#deck{position:fixed;inset:0;z-index:1}
+.slide{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;z-index:1;
+  transform:translateX(58%) scale(.93);
+  transition:transform .62s cubic-bezier(.22,.68,.28,.98),opacity .5s ease;
+  overflow-y:auto;overflow-x:hidden;
+}
+.slide.is-left{transform:translateX(-58%) scale(.93)}
+.slide.active{opacity:1;pointer-events:auto;z-index:2;transform:none}
+.stage{
+  width:min(97vw,1720px);
+  margin:0;padding:clamp(18px,4.5vh,52px) clamp(18px,4.2vw,72px) calc(52px + 4.5vh);
+}
+.slide.active .rise{animation:rise .65s ease both}
+.rise:nth-child(2){animation-delay:.08s}.rise:nth-child(3){animation-delay:.16s}
+.rise:nth-child(4){animation-delay:.22s}.rise:nth-child(5){animation-delay:.28s}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* ---------- typography ---------- */
+.kicker{font-family:'Kanit';font-weight:500;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--cyan);font-size:clamp(.7rem,1.4vw,.95rem);margin-bottom:10px;text-shadow:0 0 18px rgba(34,211,238,.55)}
+.kicker.violet{color:var(--violet);text-shadow:0 0 18px rgba(167,139,250,.55)}
+.kicker.blue{color:#7db2ff;text-shadow:0 0 18px rgba(123,178,255,.5)}
+h2.t{font-size:clamp(1.7rem,3.6vw,3rem);font-weight:600;line-height:1.18;margin-bottom:6px}
+.t .grad{background:linear-gradient(92deg,#67e8f9,#7db2ff 45%,#c4b5fd);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:clamp(.95rem,1.7vw,1.18rem);line-height:1.7;max-width:960px}
+.hl{color:#7ff3ff;font-weight:600}.hlp{color:#c4b5fd;font-weight:600}.hlo{color:#ffd48a;font-weight:600}
+
+/* ---------- glass cards ---------- */
+.card{
+  background:var(--glass);border:1px solid var(--stroke);border-radius:20px;
+  padding:clamp(16px,2.2vw,28px);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 14px 44px rgba(2,6,18,.5),inset 0 1px 0 rgba(255,255,255,.09);
+}
+.card.accent{border-color:rgba(34,211,238,.4)}
+.card.purple{border-color:rgba(167,139,250,.4)}
+.card h3{font-size:clamp(1.02rem,1.9vw,1.35rem);font-weight:500;color:#aee7ff;margin-bottom:10px}
+.card h3 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);margin-right:9px;vertical-align:2px}
+.card.purple h3{color:#d6c6ff}.card.purple h3 .dot{background:var(--violet);box-shadow:0 0 10px var(--violet)}
+.card p,.card li{color:#c9d8f2;font-size:clamp(.85rem,1.45vw,1.06rem);line-height:1.75}
+ul.clean{list-style:none}
+ul.clean li{padding-left:1.35em;position:relative;margin-bottom:.55em}
+ul.clean li::before{content:"▸";position:absolute;left:0;color:var(--cyan);text-shadow:0 0 8px rgba(34,211,238,.7)}
+
+.cols{display:grid;gap:clamp(14px,2vw,26px);align-items:start}
+.cols.c2{grid-template-columns:1fr 1fr}
+.cols.c3{grid-template-columns:repeat(3,1fr)}
+.cols.c4{grid-template-columns:repeat(4,1fr)}
+.cols.eq{align-items:stretch}
+.col-12-5{grid-template-columns:1.25fr 1fr !important}
+
+/* ---------- formula cards ---------- */
+.f-card{
+  background:radial-gradient(120% 160% at 50% -30%,rgba(34,211,238,.13),rgba(13,20,44,.28) 60%);
+  border:1px solid rgba(34,211,238,.38);border-radius:18px;
+  padding:clamp(14px,1.8vw,24px);text-align:center;
+  box-shadow:0 0 26px rgba(34,211,238,.14) inset,0 10px 30px rgba(2,6,18,.4);
+}
+.f-card.pur{background:radial-gradient(120% 160% at 50% -30%,rgba(167,139,250,.15),rgba(24,16,48,.28) 60%);
+  border-color:rgba(167,139,250,.4);box-shadow:0 0 26px rgba(167,139,250,.12) inset,0 10px 30px rgba(2,6,18,.4)}
+.f-card .eq{font-size:clamp(1.05rem,2.1vw,1.6rem);margin:8px 0}
+.f-card .lab{font-size:clamp(.72rem,1.2rem,.9rem);font-size:clamp(.72rem,1.15vw,.9rem);color:var(--muted);
+  font-family:'Kanit';letter-spacing:.08em;font-weight:500}
+.f-star{position:absolute;top:-11px;right:14px;background:linear-gradient(90deg,#22d3ee,#a78bfa);
+  color:#04121c;font-family:'Kanit';font-weight:600;font-size:.68rem;letter-spacing:.14em;
+  padding:4px 12px;border-radius:999px;box-shadow:0 0 18px rgba(34,211,238,.6)}
+
+.vars{list-style:none;font-size:clamp(.8rem,1.4vw,1.02rem);line-height:1.9;color:#c2d2ee}
+.vars b{color:#7ff3ff;font-family:'Kanit';font-weight:500}
+.vars .u{color:#8fa3c8;font-size:.85em}
+
+/* ---------- example slide ---------- */
+.ex-grid{display:grid;grid-template-columns:.92fr 1.1fr;gap:clamp(14px,2vw,26px)}
+.stepbox{counter-reset:step}
+.step{position:relative;padding:12px 14px 12px 52px;border-radius:14px;
+  background:rgba(255,255,255,.045);border:1px solid rgba(130,175,255,.14);margin-bottom:10px}
+.step::before{counter-increment:step;content:counter(step);
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  font-family:'Kanit';font-weight:600;font-size:.85rem;color:#04121c;
+  background:linear-gradient(135deg,#22d3ee,#7db2ff);box-shadow:0 0 14px rgba(34,211,238,.55)}
+.step p{color:#c9d8f2;font-size:clamp(.84rem,1.4vw,1.03rem);line-height:1.7}
+.answer{margin-top:14px;padding:clamp(12px,1.6vw,18px);border-radius:16px;text-align:center;
+  background:radial-gradient(120% 180% at 50% -40%,rgba(56,255,178,.14),rgba(10,26,22,.3) 65%);
+  border:1px solid rgba(56,255,178,.45);box-shadow:0 0 26px rgba(56,255,178,.12)}
+.answer .lab{font-family:'Kanit';letter-spacing:.2em;color:#5ef0b6;font-size:.75rem;font-weight:500}
+.answer .eq{font-size:clamp(1.15rem,2.2vw,1.7rem);margin-top:6px}
+
+/* ---------- tables ---------- */
+table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:clamp(.8rem,1.4vw,1.03rem)}
+.tbl th{font-family:'Kanit';font-weight:500;color:#aee7ff;text-align:left;
+  background:rgba(34,211,238,.08);padding:12px 14px;border-bottom:1px solid rgba(34,211,238,.35)}
+.tbl td{padding:11px 14px;border-bottom:1px solid rgba(130,175,255,.12);color:#c9d8f2;line-height:1.6;vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .rowhead{color:#7ff3ff;font-weight:600;font-family:'Kanit';white-space:nowrap}
+.tbl .rowhead.p{color:#c4b5fd}
+
+/* ---------- chips / badges ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{font-family:'Kanit';font-weight:400;font-size:clamp(.78rem,1.3vw,.95rem);color:#bfe8ff;
+  padding:9px 18px;border-radius:999px;border:1px solid rgba(34,211,238,.35);
+  background:rgba(34,211,238,.07);box-shadow:0 0 16px rgba(34,211,238,.1);white-space:nowrap}
+.chip.p{border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.08);color:#d6c6ff}
+
+/* ---------- cover ---------- */
+#cover .stage{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:100vh}
+.huge{font-size:clamp(3.6rem,11vw,9.2rem);font-weight:700;line-height:1;letter-spacing:.06em;
+  background:linear-gradient(94deg,#9beaff 5%,#7db2ff 40%,#c4b5fd 72%,#f0abfc);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 34px rgba(80,160,255,.35))}
+.sub{font-family:'Kanit';font-weight:300;color:#cfe0ff;font-size:clamp(1.1rem,2.8vw,2rem);margin-top:10px;letter-spacing:.06em}
+.atom{position:absolute;right:6vw;top:8vh;width:min(30vw,420px);opacity:.8;z-index:-1}
+.atom .ring{transform-origin:center;animation:spin 14s linear infinite}
+.atom .ring.r2{animation-duration:22s;animation-direction:reverse}
+.atom .ring.r3{animation-duration:30s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-hint{margin-top:6vh;font-family:'Kanit';color:var(--muted);font-size:.9rem;letter-spacing:.2em;animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+
+/* ---------- section dividers ---------- */
+.divider-num{font-family:'Kanit';font-weight:200;font-size:clamp(9rem,26vw,22rem);line-height:.9;
+  position:absolute;left:2vw;bottom:-2vh;z-index:-1;color:transparent;
+  -webkit-text-stroke:1.5px rgba(110,170,255,.16);
+  user-select:none}
+.divider-ill{width:min(34vw,460px);opacity:.95}
+
+/* ---------- TOC ---------- */
+.toc-item{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:12px;cursor:pointer;
+  transition:background .25s,transform .25s,border-color .25s;border:1px solid transparent}
+.toc-item:hover{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);transform:translateX(6px)}
+.toc-item .n{font-family:'Kanit';font-weight:600;color:#0a1524;background:linear-gradient(135deg,#22d3ee,#7db2ff);
+  min-width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:.8rem;box-shadow:0 0 12px rgba(34,211,238,.4)}
+.toc-item.p .n{background:linear-gradient(135deg,#a78bfa,#e879f9);box-shadow:0 0 12px rgba(167,139,250,.4)}
+.toc-item .tt{font-size:clamp(.82rem,1.35vw,1.02rem);color:#d6e4ff}
+.toc-item .pg{margin-left:auto;color:#5f7398;font-size:.78rem;font-family:'Kanit'}
+
+/* ---------- controls ---------- */
+#ctrls{position:fixed;bottom:16px;right:20px;display:flex;align-items:center;gap:10px;z-index:90}
+#ctrls2{position:fixed;bottom:16px;left:20px;display:flex;align-items:center;gap:10px;z-index:90}
+.btn{width:46px;height:46px;border-radius:50%;border:1px solid rgba(130,175,255,.28);
+  background:rgba(13,22,44,.65);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#bfe8ff;display:grid;place-items:center;cursor:pointer;transition:.25s;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+.btn:hover{border-color:var(--cyan);color:#fff;box-shadow:0 0 20px rgba(34,211,238,.45);transform:translateY(-2px)}
+.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#counter{font-family:'Kanit';font-size:.85rem;color:#9fb4d8;background:rgba(13,22,44,.6);
+  border:1px solid rgba(130,175,255,.2);padding:10px 16px;border-radius:999px;white-space:nowrap}
+#counter b{color:#7ff3ff;font-weight:600}
+#hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:90;
+  font-family:'Kanit';font-size:.72rem;letter-spacing:.12em;color:#5f7398;
+  pointer-events:none;white-space:nowrap;transition:opacity .6s}
+@media(max-width:900px){#hint{display:none}}
+
+/* ---------- overview ---------- */
+#overview{position:fixed;inset:0;z-index:200;background:rgba(3,6,13,.9);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  overflow-y:auto;padding:7vh 4vw 10vh;opacity:0;visibility:hidden;transition:opacity .35s}
+#overview.open{opacity:1;visibility:visible}
+#overview h2{text-align:center;font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:4vh}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:14px;max-width:1500px;margin:0 auto}
+.ov-item{position:relative;padding:16px 16px 14px;border-radius:16px;cursor:pointer;
+  background:var(--glass);border:1px solid var(--stroke);transition:.25s;min-height:118px;
+  display:flex;flex-direction:column;gap:8px}
+.ov-item:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 10px 30px rgba(34,211,238,.18)}
+.ov-item.current{border-color:var(--pink);box-shadow:0 0 24px rgba(232,121,249,.25)}
+.ov-item .num{font-family:'Kanit';font-weight:300;font-size:1.5rem;
+  background:linear-gradient(120deg,#67e8f9,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ov-item .tag{font-size:.62rem;font-family:'Kanit';letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
+.ov-item .title{font-size:.88rem;color:#dbe7ff;line-height:1.45}
+
+/* ---------- diagrams ---------- */
+.diagram{width:100%;height:auto;display:block}
+.fig{background:rgba(255,255,255,.03);border:1px solid rgba(130,175,255,.14);border-radius:16px;
+  padding:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.figcap{text-align:center;color:var(--muted);font-size:.78rem;font-family:'Kanit';letter-spacing:.05em;margin-top:8px}
+svg .aflow{stroke-dasharray:7 7;animation:dash 1.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-28}}
+svg .rflow{stroke-dasharray:7 7;animation:dash 1.4s linear infinite reverse}
+
+/* ---------- responsive ---------- */
+@media(max-width:1080px){
+  .cols.c4{grid-template-columns:repeat(2,1fr)}
+  .cols.c3{grid-template-columns:repeat(2,1fr)}
+  .ex-grid{grid-template-columns:1fr}
+  .divider-ill{width:min(44vw,340px)}
+}
+@media(max-width:820px){
+  .cols.c2,.cols.c3,.cols.c4,.ex-grid,.col-12-5{grid-template-columns:1fr !important}
+  .slide{overflow-y:auto}
+  #ctrls,#ctrls2{bottom:10px}
+  .btn{width:40px;height:40px}
+  #counter{padding:8px 12px;font-size:.72rem}
+  .divider-num{opacity:.5}
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="glow1"></div><div class="glow2"></div><div class="glow3"></div>
+  <div class="grid"></div>
+  <div class="stars" id="stars"></div>
+</div>
+
+<div id="progress"></div>
+
+<main id="deck">
+<!-- ================= SLIDE 1 : COVER ================= -->
+<section class="slide" id="cover" data-title="หน้าปก — PHYSICS" data-section="หน้าปก">
+  <div class="stage">
+    <svg class="atom" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="nus" cx="50%" cy="50%"><stop offset="0%" stop-color="#bff6ff"/><stop offset="60%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#3b82f6"/></radialGradient>
+      </defs>
+      <g opacity=".55">
+        <ellipse cx="200" cy="200" rx="185" ry="66" fill="none" stroke="#22d3ee" stroke-width="1.6" class="ring" opacity=".8"/>
+        <ellipse cx="200" cy="200" rx="185" ry="66" fill="none" stroke="#3b82f6" stroke-width="1.6" class="ring r2" opacity=".6" transform="rotate(60 200 200)"/>
+        <ellipse cx="200" cy="200" rx="185" ry="66" fill="none" stroke="#a78bfa" stroke-width="1.6" class="ring r3" opacity=".6" transform="rotate(120 200 200)"/>
+      </g>
+      <circle cx="386" cy="200" r="6" fill="#22d3ee"><animate attributeName="opacity" values="1;.35;1" dur="1.6s" repeatCount="indefinite"/></circle>
+      <circle cx="115" cy="340" r="6" fill="#a78bfa"><animate attributeName="opacity" values=".35;1;.35" dur="2.1s" repeatCount="indefinite"/></circle>
+      <circle cx="330" cy="80" r="6" fill="#7db2ff"><animate attributeName="opacity" values="1;.4;1" dur="2.6s" repeatCount="indefinite"/></circle>
+      <circle cx="200" cy="200" r="22" fill="url(#nus)">
+        <animate attributeName="r" values="21;24;21" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="kicker rise">PHYSICS PRESENTATION — INTERACTIVE SLIDES</div>
+    <h1 class="huge rise">PHYSICS</h1>
+    <div class="sub rise">สรุปเนื้อหาวิชาฟิสิกส์ ระดับชั้น <span class="hl">ม.4</span> – <span class="hlp">ม.5</span></div>
+    <div class="chips rise" style="justify-content:center">
+      <span class="chip">⚙ กลศาสตร์</span>
+      <span class="chip p">⚡ ไฟฟ้าและแม่เหล็ก</span>
+      <span class="chip">〜 คลื่น · แสง · เสียง</span>
+    </div>
+    <div class="scroll-hint rise">▶ กดปุ่มด้านขวา / ลูกศรขวา / SPACE เพื่อเริ่มการนำเสนอ</div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 2 : TABLE OF CONTENTS ================= -->
+<section class="slide" data-title="สารบัญ" data-section="สารบัญ">
+  <div class="stage">
+    <div class="kicker rise">TABLE OF CONTENTS</div>
+    <h2 class="t rise">สารบัญ<span class="grad"> — หัวข้อนำเสนอ</span></h2>
+    <div class="cols c2 rise" style="margin-top:18px">
+      <div class="card accent">
+        <h3><span class="dot"></span>ระดับชั้น ม.4 — กลศาสตร์ (MECHANICS)</h3>
+        <div class="toc-item" data-goto="4"><span class="n">01</span><span class="tt">บทนำสู่กลศาสตร์</span><span class="pg">p.3</span></div>
+        <div class="toc-item" data-goto="5"><span class="n">02</span><span class="tt">การเคลื่อนที่ — เวลา การกระจัด ความเร็ว การเร่ง</span><span class="pg">p.4</span></div>
+        <div class="toc-item" data-goto="6"><span class="n">03</span><span class="tt">สมการการเคลื่อนที่แบบเร่งคงที่</span><span class="pg">p.5–6</span></div>
+        <div class="toc-item" data-goto="8"><span class="n">04</span><span class="tt">การตกอิสระ</span><span class="pg">p.7–8</span></div>
+        <div class="toc-item" data-goto="10"><span class="n">05</span><span class="tt">กฎการเคลื่อนที่ของนิวตัน 3 ข้อ</span><span class="pg">p.9</span></div>
+        <div class="toc-item" data-goto="11"><span class="n">06</span><span class="tt">แรง มวล น้ำหนัก แรงตั้งฉาก และแรงเสียดทาน</span><span class="pg">p.10</span></div>
+        <div class="toc-item" data-goto="12"><span class="n">07</span><span class="tt">งาน พลังงาน และกำลัง</span><span class="pg">p.11–12</span></div>
+        <div class="toc-item" data-goto="14"><span class="n">08</span><span class="tt">โมเมนตัมและการชน</span><span class="pg">p.13–14</span></div>
+        <div class="toc-item" data-goto="16"><span class="n">09</span><span class="tt">การเคลื่อนที่แบบโปรเจกไทล์</span><span class="pg">p.15–16</span></div>
+        <div class="toc-item" data-goto="18"><span class="n">10</span><span class="tt">การเคลื่อนที่วงกลม</span><span class="pg">p.17</span></div>
+        <div class="toc-item" data-goto="19"><span class="n">11</span><span class="tt">การเคลื่อนที่แบบฮาร์มอนิกอย่างง่าย (SHM)</span><span class="pg">p.18</span></div>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>ระดับชั้น ม.5 — ไฟฟ้า–แม่เหล็ก &amp; คลื่น–แสง–เสียง</h3>
+        <div class="toc-item p" data-goto="21"><span class="n">12</span><span class="tt">ไฟฟ้าสถิต — ประจุ กฎคูลอมบ์ สนาม ศักย์ ตัวเก็บประจุ</span><span class="pg">p.20–24</span></div>
+        <div class="toc-item p" data-goto="26"><span class="n">13</span><span class="tt">กระแสไฟฟ้าดีซี (DC) — กฎออม วงจร กำลัง</span><span class="pg">p.25–28</span></div>
+        <div class="toc-item p" data-goto="30"><span class="n">14</span><span class="tt">กระแสไฟฟ้าแอซี (AC) และหม้อแปลง</span><span class="pg">p.29–31</span></div>
+        <div class="toc-item p" data-goto="33"><span class="n">15</span><span class="tt">แม่เหล็กและการเหนี่ยวไฟฟ้า — ฟาราเดย์ เลนซ์</span><span class="pg">p.32–34</span></div>
+        <div class="toc-item" data-goto="37"><span class="n">16</span><span class="tt">คลื่นสวิงแสงคลื่นเสียง คุณสมบัติคลื่น</span><span class="pg">p.36–38</span></div>
+        <div class="toc-item" data-goto="40"><span class="n">17</span><span class="tt">แสง — การสะท้อน การหักเห กฎสแนล เลนส์ การรบกวน</span><span class="pg">p.39–41</span></div>
+        <div class="toc-item" data-goto="43"><span class="n">18</span><span class="tt">เสียง — ความเข้มเสียง เดซิเบล เรโซแนนซ์ ความถี่เคาะ ดอปเปลร์</span><span class="pg">p.42–44</span></div>
+        <div class="toc-item" data-goto="46"><span class="n">★</span><span class="tt">สรุปสมการและค่าคงที่สำคัญ</span><span class="pg">p.45–46</span></div>
+        <div class="toc-item" data-goto="48"><span class="n">✦</span><span class="tt">Thank You</span><span class="pg">p.47</span></div>
+      </div>
+    </div>
+    <p class="lead rise" style="margin-top:14px;font-size:.85rem;opacity:.85">คลิกแต่ละหัวข้อเพื่อไปยังสไลด์นั้น ๆ ได้ทันที • หรือเปิดภาพรวมสไลด์ทั้งหมดด้วยปุ่ม <span class="hl">Overview</span> แถบล่างซ้าย</p>
+  </div>
+</section>
+
+<!-- ================= SLIDE 3 : DIVIDER — MECHANICS ================= -->
+<section class="slide" data-title="ส่วนที่ 1 — กลศาสตร์ (ม.4)" data-section="ส่วนที่ 1">
+  <div class="stage" style="position:relative">
+    <div class="divider-num">01</div>
+    <div class="cols c2" style="align-items:center">
+      <div>
+        <div class="kicker blue rise">SECTION 1 · ฟิสิกส์ ม.4</div>
+        <h2 class="t rise" style="font-size:clamp(2.2rem,5.5vw,4.4rem)">MECHANICS<br><span class="grad">กลศาสตร์</span></h2>
+        <p class="lead rise">ศาสตร์ที่ศึกษา <span class="hl">การเคลื่อนที่</span> ของวัตถุ ตั้งแต่การร่วงแอปเปิล รถแข่งเร่งความเร็ว ไปจนถึงดาวเทียมที่โคจรรอบโลก — ทุกอย่างอธิบายได้ด้วย<span class="hlp">กฎของนิวตัน</span> พลังงาน และโมเมนตัม</p>
+        <div class="chips rise">
+          <span class="chip">การเคลื่อนที่</span><span class="chip">แรงและนิวตัน</span>
+          <span class="chip">พลังงาน</span><span class="chip">โมเมนตัม</span>
+          <span class="chip">โปรเจกไทล์</span><span class="chip">SHM</span>
+        </div>
+      </div>
+      <div class="rise">
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#6d5df6"/></linearGradient>
+              <filter id="so" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
+            </defs>
+            <ellipse cx="250" cy="165" rx="200" ry="118" fill="none" stroke="#33507e" stroke-width="2" class="aflow"/>
+            <ellipse cx="250" cy="165" rx="118" ry="66" fill="none" stroke="#4a6aa8" stroke-width="1.5" opacity=".7"/>
+            <circle cx="250" cy="165" r="62" fill="#101d3a" stroke="url(#orb)" stroke-width="3"/>
+            <circle cx="250" cy="165" r="62" fill="url(#orb)" opacity=".14"/>
+            <ellipse cx="228" cy="150" rx="20" ry="10" fill="#22d3ee" opacity=".22" filter="url(#so)"/>
+            <circle cx="250" cy="141" r="8" fill="#22d3ee" opacity=".85"/>
+            <circle cx="330" cy="185" r="9" fill="#7db2ff"/>
+            <circle cx="437" cy="130" r="7" fill="#a78bfa" class="rflow"/>
+            <text x="252" y="258" fill="#8fa3c8" font-size="13" text-anchor="middle" font-family="Kanit">การเคลื่อนที่ของวัตถุ = ผลรวมของแรงทั้งหมด</text>
+            <path d="M250 103 L250 62" stroke="#22d3ee" stroke-width="2.4" marker-end="url(#arr1)"/>
+            <defs><marker id="arr1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <text x="264" y="72" fill="#7ff3ff" font-size="14" font-family="Kanit">v</text>
+          </svg>
+        </div>
+        <div class="figcap">วัตถุเคลื่อนที่เป็นวงโคจร — พื้นฐานของกลศาสตร์ทั้ง 3 กฎ</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 4 : INTRO TO MECHANICS ================= -->
+<section class="slide" data-title="บทนำสู่กลศาสตร์" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">01 · INTRODUCTION</div>
+    <h2 class="t rise">บทนำสู่<span class="grad">กลศาสตร์</span></h2>
+    <p class="lead rise">กลศาสตร์ (Mechanics) คือสาขาวิชาที่ศึกษา <span class="hl">การเคลื่อนที่ของวัตถุ</span> และ <span class="hlp">สาเหตุที่ทำให้เกิดการเคลื่อนที่นั้น (แรง)</span> แบ่งการศึกษาเป็นสองแขนงหลัก</p>
+    <div class="cols c3 rise" style="margin-top:20px">
+      <div class="card accent">
+        <h3><span class="dot"></span>จลนศาสตร์ (Kinematics)</h3>
+        <p>อธิบาย <b class="hl">การเคลื่อนที่เอง</b> ว่าวัตถุขยับไปทางไหน เร็วแค่ไหน เร่งแบบไหน — โดยไม่ถามว่าอะไรทำให้เกิดการเคลื่อนที่</p>
+        <p style="margin-top:8px;color:#7ff3ff;font-family:Kanit">การกระจัด · ความเร็ว · การเร่ง</p>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>พลศาสตร์ (Dynamics)</h3>
+        <p>ศึกษา <b class="hlp">สาเหตุของการเคลื่อนที่</b> คือแรงที่กระทำต่อวัตถุ และจะส่งผลต่อการเคลื่อนที่อย่างไร</p>
+        <p style="margin-top:8px;color:#d6c6ff;font-family:Kanit">กฎนิวตัน · แรง · มวล</p>
+      </div>
+      <div class="card">
+        <h3><span class="dot"></span>ปริมาณสเกลาร์ vs เวกเตอร์</h3>
+        <ul class="clean">
+          <li><b class="hl">สเกลาร์</b> มีแต่ขนาด เช่น ระยะทาง, อัตราเร็ว, มวล, พลังงาน</li>
+          <li><b class="hlp">เวกเตอร์</b> มีทั้งขนาดและทิศทาง เช่น การกระจัด, ความเร็ว, แรง, โมเมนตัม</li>
+        </ul>
+      </div>
+    </div>
+    <div class="chips rise"><span class="chip">หน่วยพื้นฐาน SI : เมตร (m) · วินาที (s) · กิโลกรัม (kg)</span><span class="chip">เวกเตอร์เขียนเป็นพู่กันหนา / ใส่ลูกศร</span></div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 5 : MOTION BASICS ================= -->
+<section class="slide" data-title="การเคลื่อนที่พื้นฐาน" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">02 · MOTION</div>
+    <h2 class="t rise">การเคลื่อนที่ — ระยะทาง การกระจัด <span class="grad">ความเร็ว การเร่ง</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:16px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="150" width="500" height="4" fill="#33507e" rx="2"/>
+            <line x1="30" y1="140" x2="30" y2="164" stroke="#4a6aa8" stroke-width="2"/>
+            <line x1="530" y1="140" x2="530" y2="164" stroke="#4a6aa8" stroke-width="2"/>
+            <path d="M30 165 L520 165" stroke="#22d3ee" stroke-width="2.5" class="aflow" marker-end="url(#m1)"/>
+            <defs><marker id="m1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#22d3ee"/></marker>
+            <marker id="m2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#a78bfa"/></marker></defs>
+            <text x="270" y="195" fill="#7ff3ff" font-size="14" text-anchor="middle" font-family="Kanit">การกระจัด (d) — ลูกศรจากจุดเริ่มไปจุดสุดท้าย</text>
+            <path class="rflow" d="M30 150 C 130 90, 260 40, 380 55 S 500 130 520 152" fill="none" stroke="#a78bfa" stroke-width="2.5" marker-end="url(#m2)"/>
+            <text x="255" y="42" fill="#c4b5fd" font-size="14" text-anchor="middle" font-family="Kanit">ระยะทาง (s) — ความยาวตามเส้นทางจริง</text>
+            <text x="30" y="128" fill="#8fa3c8" font-size="13" font-family="Kanit">จุดเริ่มต้น A</text>
+            <text x="500" y="128" fill="#8fa3c8" font-size="13" font-family="Kanit">จุดสุดท้าย B</text>
+          </svg>
+        </div>
+        <div class="cols c2" style="margin-top:12px">
+          <div class="f-card"><div class="lab">อัตราเร็วหรือความเร็วเฉลี่ย</div><div class="eq">\[ v_{\text{avg}}=\dfrac{\Delta x}{\Delta t} \]</div></div>
+          <div class="f-card pur"><div class="lab">การเร่ง</div><div class="eq">\[ a=\dfrac{\Delta v}{\Delta t} \]</div></div>
+        </div>
+      </div>
+      <div class="card accent">
+        <h3><span class="dot"></span>นิยามสำคัญ</h3>
+        <ul class="clean">
+          <li><b class="hl">ระยะทาง (distance)</b> เป็นสเกลาร์ — ความยาวตามเส้นทางที่เคลื่อนไปจริง ๆ</li>
+          <li><b class="hl">การกระจัด (displacement)</b> เป็นเวกเตอร์ — ลูกศรจากจุดเริ่มต้นชี้ไปจุดสุดท้าย</li>
+          <li><b class="hl">อัตราเร็ว (speed)</b> สเกลาร์ = ระยะทาง / เวลา</li>
+          <li><b class="hl">ความเร็ว (velocity)</b> เวกเตอร์ = การกระจัด / เวลา</li>
+          <li><b class="hl">การเร่ง (acceleration)</b> เวกเตอร์ = อัตราการเปลี่ยนแปลงความเร็ว (เร่ง / ช้าลง / เปลี่ยนทิศ)</li>
+        </ul>
+        <div class="vars" style="margin-top:8px">
+          <b>s</b> ระยะทาง, <b>d</b> การกระจัด <span class="u">(เมตร, m)</span><br>
+          <b>v</b> ความเร็ว/อัตราเร็ว <span class="u">(m/s)</span> · <b>a</b> การเร่ง <span class="u">(m/s²)</span> · <b>t</b> เวลา <span class="u">(s)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 6 : EQUATIONS OF MOTION ================= -->
+<section class="slide" data-title="สมการการเคลื่อนที่" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">03 · UNIFORMLY ACCELERATED MOTION</div>
+    <h2 class="t rise">สมการการเคลื่อนที่<span class="grad">แบบเร่งคงที่</span></h2>
+    <p class="lead rise">เมื่อวัตถุเคลื่อนที่บนเส้นตรงและมีการเร่ง <span class="hl">คงที่</span> สมมิติ 3 สมการนี้ใช้แก้ปัญหาได้เกือบทั้งหมด — เลือกใช้สมการที่<span class="hlp">ไม่มีตัวแปรที่ไม่รู้จักและไม่จำเป็นต้องหา</span></p>
+    <div class="cols c3 rise" style="margin-top:20px">
+      <div class="f-card"><div class="f-star">สมการที่ 1</div><div class="eq">\[ v = v_0 + at \]</div><div class="lab">ไม่มี s — ใช้เมื่อไม่ต้องการการกระจัด</div></div>
+      <div class="f-card"><div class="f-star">สมการที่ 2</div><div class="eq">\[ s = v_0 t + \tfrac{1}{2}at^2 \]</div><div class="lab">ไม่มี v — ใช้เมื่อไม่ต้องการความเร็วปลาย</div></div>
+      <div class="f-card"><div class="f-star">สมการที่ 3</div><div class="eq">\[ v^2 = v_0^2 + 2as \]</div><div class="lab">ไม่มี t — ใช้เมื่อไม่รู้/ไม่ต้องการเวลา</div></div>
+    </div>
+    <div class="card rise" style="margin-top:18px">
+      <h3><span class="dot"></span>แต่ละตัวแปรคืออะไร</h3>
+      <div class="vars">
+        <b>v</b> ความเร็วปลาย <span class="u">(m/s)</span> · <b>v₀</b> ความเร็วเริ่มต้น <span class="u">(m/s)</span> · <b>a</b> การเร่งคงที่ <span class="u">(m/s²)</span> · <b>s</b> การกระจัดที่เคลื่อนไปได้ <span class="u">(m)</span> · <b>t</b> ช่วงเวลาที่ใช้ <span class="u">(s)</span>
+      </div>
+      <p style="margin-top:8px;font-size:.9rem;color:#9fb4d8">💡 เคล็ดลับ: ถ้าวัตถุ "เริ่มจากที่พัก" ให้ \( v_0=0 \) และเขียนเวกเตอร์การเร่งให้สอดคล้องทิศ — เช่น เคลื่อนไปข้างหน้าแต่กดเบรก ให้ \( a \) มีค่าเป็นลบ</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 7 : EXAMPLE — EQUATIONS OF MOTION ================= -->
+<section class="slide" data-title="ตัวอย่าง — สมการการเคลื่อนที่" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">ตัวอย่างการคำนวณ · EXAMPLE</div>
+    <h2 class="t rise">รถยนต์<span class="grad">เร่งออกจากที่พัก</span></h2>
+    <div class="ex-grid rise" style="margin-top:16px">
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p>รถยนต์ <b class="hl">เริ่มเคลื่อนที่จากการพัก</b> แล้วเร่งความเร็วอย่างสม่ำเสมอด้วยการเร่ง <b class="hl">2 m/s²</b> เป็นเวลา <b class="hl">8 s</b></p>
+          <ul class="clean" style="margin-top:10px">
+            <li>1) ความเร็วปลายของรถเป็นเท่าใด?</li>
+            <li>2) รถเคลื่อนที่ได้ระยะทางเท่าไร?</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3><span class="dot"></span>กำหนดให้</h3>
+          <div class="vars">
+            <b>v₀ = 0 m/s</b> (เริ่มจากที่พัก) · <b>a = 2 m/s²</b> · <b>t = 8 s</b>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stepbox">
+          <div class="step"><p>ข้อ 1 — หาความเร็วปลาย ใช้สมการที่ 1: \( v=v_0+at \)<br>→ \( v = 0 + (2)(8) = 16 \) m/s</p></div>
+          <div class="step"><p>ข้อ 2 — หาการกระจัด ใช้สมการที่ 2: \( s=v_0t+\tfrac12 at^2 \)<br>→ \( s = 0 + \tfrac12 (2)(8)^2 = 64 \) m</p></div>
+          <div class="step"><p>ตรวจสอบด้วยสมการที่ 3: \( v^2=0+2(2)(64)=256 \Rightarrow v=16 \) m/s ตรงกัน ✓</p></div>
+        </div>
+        <div class="answer">
+          <div class="lab">FINAL ANSWER</div>
+          <div class="eq">v = 16 m/s &nbsp;·&nbsp; s = 64 m</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 8 : FREE FALL ================= -->
+<section class="slide" data-title="การตกอิสระ" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">04 · FREE FALL</div>
+    <h2 class="t rise">การตกอิสระ<span class="grad"> (Free Fall)</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+            <rect x="70" y="30" width="46" height="360" fill="#101d3a" stroke="#33507e" stroke-width="2" rx="4"/>
+            <g fill="#33507e" opacity=".6">
+              <rect x="78" y="50" width="30" height="24"/><rect x="78" y="100" width="30" height="24"/>
+              <rect x="78" y="150" width="30" height="24"/><rect x="78" y="200" width="30" height="24"/>
+              <rect x="78" y="250" width="30" height="24"/><rect x="78" y="300" width="30" height="24"/>
+            </g>
+            <defs>
+              <radialGradient id="ball" cx="40%" cy="35%"><stop offset="0%" stop-color="#c8faff"/><stop offset="100%" stop-color="#22d3ee"/></radialGradient>
+              <marker id="fd" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#e879f9"/></marker>
+            </defs>
+            <circle cx="170" cy="60" r="14" fill="url(#ball)" opacity=".35"/>
+            <circle cx="184" cy="120" r="14" fill="url(#ball)" opacity=".55"/>
+            <circle cx="200" cy="196" r="14" fill="url(#ball)" opacity=".8"/>
+            <circle cx="218" cy="300" r="14" fill="url(#ball)"/>
+            <g stroke="#e879f9" stroke-width="2.5">
+              <line x1="256" y1="60" x2="256" y2="86" marker-end="url(#fd)"/>
+              <line x1="256" y1="120" x2="256" y2="172" marker-end="url(#fd)"/>
+              <line x1="256" y1="196" x2="256" y2="272" marker-end="url(#fd)"/>
+            </g>
+            <text x="266" y="180" fill="#f0abfc" font-size="16" font-family="Kanit">g</text>
+            <text x="93" y="24" fill="#8fa3c8" font-size="13" font-family="Kanit" text-anchor="middle">44.1 m</text>
+            <line x1="140" y1="30" x2="140" y2="390" stroke="#2a4066" stroke-width="1" stroke-dasharray="5 6"/>
+          </svg>
+        </div>
+        <div class="figcap">อุปกรณ์สาธิต (ฟีเธอร์–เหรียญ ในหลอดสุญญากาศ) : ตกอิสระสัมผัสพร้อมกัน ไม่ขึ้นกับมวล</div>
+      </div>
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>หลักการ</h3>
+          <p>วัตถุที่<b class="hl">ตกอย่างอิสระ</b> (ปล่อยจากที่พัก ไม่คิดแรงเสียดทานอากาศ) มีการเร่งลงเนือย ๆ จากแรงโน้มถ่วงโลก</p>
+          <div class="f-card" style="margin-top:10px"><div class="eq">\[ g \approx 9.8 \ \mathrm{m/s^2} \]</div><div class="lab">การเร่งโน้มถ่วงของโลก (ปริมาณขนาดเฉลี่ย)</div></div>
+        </div>
+        <div class="f-card pur" style="margin-top:14px">
+          <div class="lab">ใช้สมการการเคลื่อนที่โดยแทน a = g</div>
+          <div class="eq">\[ v = gt \qquad h = \tfrac{1}{2}gt^2 \qquad v^2 = 2gh \]</div>
+        </div>
+        <ul class="clean" style="margin-top:10px;font-size:clamp(.84rem,1.4vw,1rem);color:#c9d8f2;padding-left:4px">
+          <li><b>h</b> ความสูงจากที่ปล่อย <span class="u">(m)</span> · <b>v</b> ความเร็วที่ตกได้ <span class="u">(m/s)</span> · <b>t</b> เวลา <span class="u">(s)</span></li>
+          <li>ทุกวัตถุตกอิสระมีอัตราเร่งเท่ากัน — ไม่ขึ้นกับขนาดหรือมวล</li>
+          <li>การขว้างลงด้านล่าง: \( h=t v_0 t+\tfrac12 g t^2 \) ยังใช้สมการเดียวกัน</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 9 : EXAMPLE — FREE FALL ================= -->
+<section class="slide" data-title="ตัวอย่าง — การตกอิสระ" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">ตัวอย่างการคำนวณ · EXAMPLE</div>
+    <h2 class="t rise">หินวางจาก<span class="grad">หอสูง 44.1 m</span></h2>
+    <div class="ex-grid rise" style="margin-top:16px">
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p><b class="hl">หินถูกปล่อยจากที่พัก</b>จากกำแพง (free fall) ที่ความสูง <b class="hl">44.1 m</b> — ใช้ g = 9.8 m/s² และไม่คิดแรงเสียดทานอากาศ</p>
+          <ul class="clean" style="margin-top:10px">
+            <li>1) หินตกถึงพื้นใช้เวลากี่วินาที?</li>
+            <li>2) ความเร็วขณะตกถึงพื้น?</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3><span class="dot"></span>กำหนดให้</h3>
+          <div class="vars">
+            <b>h = 44.1 m</b> · <b>v₀ = 0 m/s</b> · <b>g = 9.8 m/s²</b> (ลง)
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stepbox">
+          <div class="step"><p>ข้อ 1 — ใช้ \( h=\tfrac12 gt^2 \) จากการพัก<br>\( t = \sqrt{\dfrac{2h}{g}} = \sqrt{\dfrac{2(44.1)}{9.8}} = \sqrt{9} = 3.0 \) s</p></div>
+          <div class="step"><p>ข้อ 2 — ความเร็วตอนถึงพื้น ใช้ \( v=gt \)<br>\( v = (9.8)(3.0) = 29.4 \) m/s</p></div>
+          <div class="step"><p>ตรวจสอบ: \( v=\sqrt{2gh} = \sqrt{2(9.8)(44.1)} = \sqrt{864.36} = 29.4 \) m/s ✓</p></div>
+        </div>
+        <div class="answer">
+          <div class="lab">FINAL ANSWER</div>
+          <div class="eq">t = 3.0 s &nbsp;·&nbsp; v = 29.4 m/s (ลง)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 10 : NEWTON'S LAWS ================= -->
+<section class="slide" data-title="กฎการเคลื่อนที่ของนิวตัน" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">05 · NEWTON'S LAWS</div>
+    <h2 class="t rise">กฎการเคลื่อนที่ของนิวตัน<span class="grad"> 3 ข้อ</span></h2>
+    <div class="cols c3 rise" style="margin-top:18px">
+      <div class="card accent">
+        <h3><span class="dot"></span>กฎข้อ 1 — กฎความเฉื่อย</h3>
+        <p>วัตถุจะ<b class="hl">คงสภาพ</b>การเคลื่อน (พักหรือเคลื่อนไปด้วยความเร็วคงที่) เว้นแต่มีแรงลัพธ์ไม่เป็นศูนย์มากระทำ</p>
+        <div class="f-card" style="margin-top:10px"><div class="eq">\[ \Sigma \vec{F}=0 \;\Rightarrow\; \vec{a}=0 \]</div></div>
+        <p style="margin-top:8px;color:#7ff3ff;font-family:Kanit">มวลคือ การวัดความเฉื่อย (มวลมาก → เปลี่ยนสถานะยาก)</p>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>กฎข้อ 2 — กฎการเร่ง</h3>
+        <p>การเร่งของวัตถุ<b class="hlp">แปรผันตรงกับแรงลัพธ์</b> และแปรผันผกผันกับมวล ทิศการเร่งตามทิศแรงลัพธ์</p>
+        <div class="f-card pur" style="margin-top:10px"><div class="eq">\[ \Sigma\vec{F}=m\vec{a} \]</div><div class="lab">ΣF : แรงลัพธ์ (N) · m : มวล (kg) · a : การเร่ง (m/s²)</div></div>
+        <p style="margin-top:8px;color:#d6c6ff;font-family:Kanit">ใช้แก้โจทย์แรงเกือบทุกข้อ</p>
+      </div>
+      <div class="card">
+        <h3><span class="dot"></span>กฎข้อ 3 — กฎการแสดงเหตุปฏิกิริยา</h3>
+        <p>เมื่อวัตถุ A ออกแรงต่อวัตถุ B วัตถุ B จะ<b>ออกแรงต่อ A กลับ</b>ด้วยขนาดเท่ากันแต่ทิศตรงข้าม</p>
+        <div class="f-card" style="margin-top:10px"><div class="eq">\[ \vec{F}_{AB} = -\vec{F}_{BA} \]</div><div class="lab">ขนาดเท่ากัน · ทิศตรงข้าม</div></div>
+        <p style="margin-top:8px;color:#9fb4d8;font-family:Kanit">แรงสองอันนี้ไม่อยู่กับวัตถุเดียวกัน → จึง "หักล้าง" ไม่ได้</p>
+      </div>
+    </div>
+    <div class="chips rise"><span class="chip">จรวดพ่นแก๊สลงข้างล่าง → แก๊สผลักจรวดขึ้นข้างบน (ข้อ 3)</span><span class="chip">กล่องวางนิ่งบนโต๊ะ : N ต้าน w ทำให้ ΣF = 0 (ข้อ 1)</span></div>
+  </div>
+</section>
+<!-- ================= SLIDE 11 : FORCE, MASS, WEIGHT, NORMAL, FRICTION ================= -->
+<section class="slide" data-title="แรง มวล น้ำหนัก แรงตั้งฉาก แรงเสียดทาน" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">06 · FORCES</div>
+    <h2 class="t rise">แรง มวล น้ำหนัก <span class="grad">แรงตั้งฉาก และแรงเสียดทาน</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="fa" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#22d3ee"/></marker>
+              <marker id="fb" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#e879f9"/></marker>
+              <marker id="fc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#a78bfa"/></marker>
+            </defs>
+            <rect x="0" y="240" width="420" height="10" fill="#22355c" rx="3"/>
+            <g stroke="#33507e" stroke-width="1.6">
+              <line x1="8" y1="250" x2="-4" y2="264"/><line x1="28" y1="250" x2="16" y2="264"/><line x1="48" y1="250" x2="36" y2="264"/>
+              <line x1="68" y1="250" x2="56" y2="264"/><line x1="88" y1="250" x2="76" y2="264"/><line x1="108" y1="250" x2="96" y2="264"/>
+              <line x1="128" y1="250" x2="116" y2="264"/><line x1="148" y1="250" x2="136" y2="264"/><line x1="168" y1="250" x2="156" y2="264"/>
+              <line x1="188" y1="250" x2="176" y2="264"/><line x1="208" y1="250" x2="196" y2="264"/><line x1="228" y1="250" x2="216" y2="264"/>
+              <line x1="248" y1="250" x2="236" y2="264"/><line x1="268" y1="250" x2="256" y2="264"/><line x1="288" y1="250" x2="276" y2="264"/>
+              <line x1="308" y1="250" x2="296" y2="264"/><line x1="328" y1="250" x2="316" y2="264"/><line x1="348" y1="250" x2="336" y2="264"/>
+              <line x1="368" y1="250" x2="356" y2="264"/><line x1="388" y1="250" x2="376" y2="264"/><line x1="408" y1="250" x2="396" y2="264"/>
+            </g>
+            <rect x="150" y="170" width="120" height="70" rx="8" fill="#101d3a" stroke="#4a6aa8" stroke-width="2"/>
+            <circle cx="190" cy="240" r="0"/>
+            <text x="210" y="210" fill="#dbe7ff" font-size="17" text-anchor="middle" font-family="Kanit">m</text>
+            <line x1="210" y1="155" x2="210" y2="105" stroke="#a78bfa" stroke-width="3" marker-end="url(#fc)"/>
+            <text x="218" y="118" fill="#c4b5fd" font-size="15" font-family="Kanit">N (แรงตั้งฉาก)</text>
+            <line x1="285" y1="205" x2="365" y2="205" stroke="#22d3ee" stroke-width="3" marker-end="url(#fa)"/>
+            <text x="345" y="195" fill="#7ff3ff" font-size="15" font-family="Kanit">F (แรงออก)</text>
+            <line x1="135" y1="248" x2="70" y2="248" stroke="#66d9e8" stroke-width="3" marker-end="url(#fa)" opacity=".85"/>
+            <text x="65" y="238" fill="#7ff3ff" font-size="14" font-family="Kanit">f (เสียดทาน)</text>
+            <line x1="210" y1="250" x2="210" y2="288" stroke="#e879f9" stroke-width="3" marker-end="url(#fb)"/>
+            <text x="218" y="284" fill="#f0abfc" font-size="15" font-family="Kanit">w = mg (น้ำหนัก)</text>
+          </svg>
+        </div>
+        <div class="figcap">ถอนแรงทั้งหมดที่กระทำต่อกล่องบนพื้นราบ (Free-body diagram)</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card"><div class="lab">น้ำหนัก</div><div class="eq">\[ w = mg \]</div></div>
+          <div class="f-card pur"><div class="lab">แรงเสียดทาน</div><div class="eq">\[ f = \mu N \]</div></div>
+        </div>
+        <div class="card accent" style="margin-top:14px">
+          <h3><span class="dot"></span>ความหมายและหน่วย</h3>
+          <ul class="clean">
+            <li><b class="hl">มวล (m)</b> ปริมาณสสาร/ความเฉื่อย คงที่ทุกที่ <span class="u">(kg)</span></li>
+            <li><b class="hl">น้ำหนัก (w)</b> เป็นเวกเตอร์แรงดึงดูดของโลก = \( mg \) <span class="u">(Newton, N)</span></li>
+            <li><b class="hl">แรงตั้งฉาก (N)</b> แรงจากพื้นผิวพุ่งตั้งฉากกับพื้น — พื้นราบ: \( N=mg \), พื้นเอียง: \( N=mg\cos\theta \)</li>
+            <li><b class="hl">แรงเสียดทาน (f)</b> ต้านการเคลื่อนที่ ทิศตรงข้ามกับทิศการเคลื่อน</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3><span class="dot"></span>สัมประสิทธิ์แรงเสียดทาน μ (ไม่ติดหน่วย)</h3>
+          <ul class="clean">
+            <li><b class="hl">แรงเสียดทานสถิต (static)</b> — ก่อนกล่องเริ่มเลื่อน: \( f_s \le \mu_s N \)</li>
+            <li><b class="hl">แรงเสียดทานจลน์ (kinetic)</b> — ขณะเลื่อนไปแล้ว: \( f_k = \mu_k N \)</li>
+            <li>โดยทั่วไป \( \mu_k &lt; \mu_s \) และ μ ขึ้นกับคู่สารสัมผัส (ไม่ติดหน่วย)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 12 : WORK ENERGY POWER ================= -->
+<section class="slide" data-title="งาน พลังงาน และกำลัง" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">07 · WORK · ENERGY · POWER</div>
+    <h2 class="t rise">งาน พลังงาน<span class="grad"> และกำลัง</span></h2>
+    <div class="cols c3 rise" style="margin-top:18px">
+      <div class="f-card">
+        <div class="f-star">งาน (Work)</div>
+        <div class="eq">\[ W = Fs\cos\theta \]</div>
+        <div class="lab">W : งาน (J) · F : แรง (N) · s : การกระจัด (m) · θ : มุมระหว่างแรงกับการกระจัด</div>
+      </div>
+      <div class="f-card pur">
+        <div class="f-star">พลังงาน (Energy)</div>
+        <div class="eq">\[ E_k = \tfrac{1}{2}mv^2 \qquad E_p = mgh \]</div>
+        <div class="lab">จลน์ (J) · ศักย์โน้มถ่วง (J) · E : พลังงาน (J)</div>
+      </div>
+      <div class="f-card">
+        <div class="f-star">กำลัง (Power)</div>
+        <div class="eq">\[ P = \dfrac{W}{t} = \vec{F}\cdot\vec{v} \]</div>
+        <div class="lab">P : กำลัง (Watt) · t : เวลา (s) · 1 hp = 746 W</div>
+      </div>
+    </div>
+    <div class="cols c2 rise" style="margin-top:18px">
+      <div class="card accent">
+        <h3><span class="dot"></span>สมบัติสำคัญของ "งาน"</h3>
+        <ul class="clean">
+          <li>งานเป็น <b class="hl">สเกลาร์</b> มีหน่วยเป็นจูล (J)</li>
+          <li>แรงตั้งฉากกับการกระจัด (\( \theta=90^\circ \)) → <b class="hl">งานเป็นศูนย์</b></li>
+          <li><b class="hl">งานบวก</b> เมื่อ \( 0^\circ \le \theta &lt; 90^\circ \) (แรงช่วยการเคลื่อน)<br>
+            <b class="hl">งานลบ</b> เมื่อ \( \theta &gt; 90^\circ \) เช่น แรงเสียดทาน</li>
+          <li>งานรวม = ผลเปลี่ยนแปลงพลังงานจลน์ (ทฤษฎีบทงาน–พลังงาน)</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>การอนุรักษ์พลังงานกล</h3>
+        <p>เมื่อไม่มีแรงเสียดทาน (แรงอนุรักษ์พลังงานเท่านั้น) จะมีสิ่งนี้แปลกในเชิงลึก:</p>
+        <div class="f-card pur" style="margin-top:10px">
+          <div class="eq">\[ E_k + E_p = \text{คงที่} \]</div>
+          <div class="lab">พลังงานกล (จลน์ + ศักย์โน้มถ่วง) รวมกันคงที่</div>
+        </div>
+        <p style="margin-top:8px;text-align:center;font-family:Kanit;color:#d6c6ff">ตัวอย่าง: วัตถุสไลด์ลงจากที่พักที่ความสูง h → ที่พื้นความเร็ว v = \(\sqrt{2gh}\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 13 : EXAMPLE — CONSERVATION OF ENERGY ================= -->
+<section class="slide" data-title="ตัวอย่าง — การอนุรักษ์พลังงาน" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">ตัวอย่างการคำนวณ · EXAMPLE</div>
+    <h2 class="t rise">โรลเลอร์คอสเตอร์<span class="grad"> เลื่อนลงจากที่พัก</span></h2>
+    <div class="ex-grid rise" style="margin-top:16px">
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p>รถโรลเลอร์คอสเตอร์มวล <b class="hl">500 kg</b> สไลด์ลงตามทางลาดจากการพัก จากความสูง <b class="hl">5 m</b> (เงื่อนไข: ไม่คิดแรงเสียดทาน, g = 9.8 m/s²)</p>
+          <ul class="clean" style="margin-top:10px">
+            <li>1) พลังงานศักย์โน้มถ่วงตอนด้านบน?</li>
+            <li>2) ความเร็วที่ทางเชิงลาดด้านล่าง?</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3><span class="dot"></span>กำหนดให้</h3>
+          <div class="vars">
+            <b>m = 500 kg</b> · <b>h = 5 m</b> · <b>v₀ = 0 m/s</b> · <b>g = 9.8 m/s²</b>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stepbox">
+          <div class="step"><p>ที่จุดสูงสุด รถมีแต่พลังงานศักย์:<br>\( E_p = mgh = (500)(9.8)(5) = 24{,}500 \) J</p></div>
+          <div class="step"><p>ที่ระดับพื้น พลังงานศักย์หมดไปและกลายเป็นพลังงานจลน์<br>\( mgh = \tfrac12 mv^2 \) → มวลตัดกันหมด \( v=\sqrt{2gh} \)</p></div>
+          <div class="step"><p>\( v = \sqrt{2(9.8)(5)} = \sqrt{98} \approx 9.9 \) m/s</p></div>
+        </div>
+        <div class="answer">
+          <div class="lab">FINAL ANSWER</div>
+          <div class="eq">E_p = 24,500 J &nbsp;·&nbsp; v ≈ 9.9 m/s</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 14 : MOMENTUM & IMPULSE ================= -->
+<section class="slide" data-title="โมเมนตัมและแรงดล" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">08 · MOMENTUM &amp; IMPULSE</div>
+    <h2 class="t rise">โมเมนตัม<span class="grad"> และแรงดล</span></h2>
+    <div class="cols c3 rise" style="margin-top:18px">
+      <div class="f-card">
+        <div class="f-star">โมเมนตัม</div>
+        <div class="eq">\[ \vec{p} = m\vec{v} \]</div>
+        <div class="lab">p : โมเมนตัม (เวกเตอร์) · หน่วย kg·m/s</div>
+      </div>
+      <div class="f-card pur">
+        <div class="f-star">แรงดล (Impulse)</div>
+        <div class="eq">\[ J = F_{\text{avg}}\,\Delta t = \Delta p \]</div>
+        <div class="lab">หน่วย N·s = kg·m/s · พื้นที่ใต้กราฟ F–t</div>
+      </div>
+      <div class="f-card">
+        <div class="f-star">การอนุรักษ์โมเมนตัม</div>
+        <div class="eq">\[ \Sigma \vec{p}_{\text{ก่อน}} = \Sigma \vec{p}_{\text{หลัง}} \]</div>
+        <div class="lab">ระบบปิด (ไม่มีแรงภายนอกลัพธ์)</div>
+      </div>
+    </div>
+    <div class="cols c2 rise" style="margin-top:18px">
+      <div class="card accent">
+        <h3><span class="dot"></span>แรงดลบอกอะไรเรา</h3>
+        <p>เมื่อผลเปลี่ยนแปลงโมเมนตัม \( \Delta p \) เท่าเดิม แรงเฉลี่ยขึ้นกับเวลาชน: \( F_{\text{avg}} = \Delta p/\Delta t \)</p>
+        <ul class="clean" style="margin-top:8px">
+          <li><b class="hl">ยืดเวลาการชน (Δt ใหญ่)</b> → แรงเฉลี่ยลดลง → ปลอดภัยขึ้น</li>
+          <li>ถุงลมนิรภัย (airbag) และเข็มขัดนิรภัย ทำหน้าที่<b>ยืดเวลาชน</b>ให้ผู้โดยสาร</li>
+          <li>แรงดล = พื้นที่ใต้กราฟ <b>F–t</b></li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>หลักคิดแก้โจทย์โมเมนตัม</h3>
+        <ul class="clean">
+          <li>กำหนดทิศอ้างอิงซ้าย/ขวาเสียก่อน (ทิศตรงข้ามให้ถือค่าเป็นลบ)</li>
+          <li>เขียนสมการอนุรักษ์โมเมนตัม <b>แยกตามแกน x</b></li>
+          <li>ตรวจหน่วย: โมเมนตัม kg·m/s · แรงดล N·s</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 15 : COLLISIONS ================= -->
+<section class="slide" data-title="การชน 3 ประเภท" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">08 · COLLISIONS</div>
+    <h2 class="t rise">การชน<span class="grad"> 3 ประเภท</span></h2>
+    <div class="card accent rise" style="margin-top:14px;padding:14px clamp(12px,2vw,22px)">
+      <table class="tbl">
+        <tr><th style="width:24%">ประเภทการชน</th><th>โมเมนตัม</th><th>พลังงานจลน์</th><th>ตัวอย่าง</th></tr>
+        <tr>
+          <td class="rowhead">ยืดหยุ่นสมบูรณ์<br><span style="color:#5f7398;font-size:.8rem">Perfectly Elastic</span></td>
+          <td>คงที่ ✓</td><td>คงที่ ✓</td>          <td>การชนระหว่างโมเลกุลก๊าซ (โมเดลก๊าซอุดมคติ)</td>
+        </tr>
+        <tr>
+          <td class="rowhead">ยืดหยุ่นบางส่วน</td>
+          <td>คงที่ ✓</td><td><span class="hlo">ลดลง</span></td><td>ลูกบอลหยดลงพื้น กระดอนตบ้าง</td>
+        </tr>
+        <tr>
+          <td class="rowhead">ไม่ยืดหยุ่นสมบูรณ์<br><span style="color:#5f7398;font-size:.8rem">Perfectly Inelastic</span></td>
+          <td>คงที่ ✓</td><td><span class="hlo">ลดลงมากที่สุด</span></td>          <td>รถคู่เกี่ยวยนต์กันแล้วไหลต่อพร้อมกัน</td>
+        </tr>
+      </table>
+    </div>
+    <div class="cols c2 rise" style="margin-top:16px">
+      <div class="f-card">
+        <div class="lab">ชนไม่ยืดหยุ่นสมบูรณ์ (เคลื่อนที่ร่วมกัน)</div>
+        <div class="eq">\[ m_1v_1 + m_2v_2 = (m_1+m_2)\,v' \]</div>
+      </div>
+      <div class="f-card pur">
+        <div class="lab">ชนยืดหยุ่นสมบูรณ์ 1 มิติ</div>
+        <div class="eq">\[ v_1' = \dfrac{(m_1-m_2)v_1+2m_2v_2}{m_1+m_2} \]</div>
+        <div class="lab">ถ้า m₁ = m₂ → สลับความเร็วกันพอดี (v₁' = v₂, v₂' = v₁)</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 16 : PROJECTILE MOTION ================= -->
+<section class="slide" data-title="การเคลื่อนที่แบบโปรเจกไทล์" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">09 · PROJECTILE MOTION</div>
+    <h2 class="t rise">การเคลื่อนที่แบบ<span class="grad">โปรเจกไทล์</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:12px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="pa" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#22d3ee"/></marker>
+              <linearGradient id="pg" x1="0" x2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
+            </defs>
+            <line x1="20" y1="270" x2="545" y2="270" stroke="#33507e" stroke-width="2"/>
+            <rect x="18" y="238" width="16" height="32" fill="#22355c" rx="2"/>
+            <line x1="26" y1="236" x2="66" y2="216" stroke="#a78bfa" stroke-width="3" marker-end="url(#pa)" transform="rotate(-30 26 236)"/>
+            <path d="M26 240 Q 250 -80 500 270" fill="none" stroke="url(#pg)" stroke-width="3.2" class="aflow"/>
+            <line x1="150" y1="128" x2="150" y2="270" stroke="#4a6aa8" stroke-width="1.5" stroke-dasharray="4 5"/>
+            <text x="150" y="118" fill="#5f7398" font-size="13" text-anchor="middle" font-family="Kanit">H (สูงสุด)</text>
+            <line x1="26" y1="292" x2="500" y2="292" stroke="#4a6aa8" stroke-width="1.5"/>
+            <text x="263" y="288" fill="#8fa3c8" font-size="13" text-anchor="middle" font-family="Kanit">R (ระยะพุ่ง)</text>
+            <g stroke="#7ff3ff" stroke-width="2.6">
+              <line x1="150" y1="132" x2="242" y2="132" marker-end="url(#pa)"/>
+              <line x1="300" y1="132" x2="392" y2="132" marker-end="url(#pa)"/>
+            </g>
+            <text x="266" y="122" fill="#7ff3ff" font-size="13" text-anchor="middle" font-family="Kanit">vₓ คงที่</text>
+            <g stroke="#f0abfc" stroke-width="2.6">
+              <line x1="150" y1="132" x2="158" y2="196" marker-end="url(#pa)" opacity=".85"/>
+            </g>
+            <text x="185" y="238" fill="#f0abfc" font-size="13" font-family="Kanit">v_y ลดจนเป็น 0 ที่ยอด แล้วเพิ่มทางลง</text>
+          </svg>
+        </div>
+        <div class="figcap">เคลื่อนด้าน x แบบไม่มีการเร่ง · เคลื่อนด้าน y แบบเร่ง g ทั้งสองเกิดพร้อมกัน</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card"><div class="lab">องค์ประกอบความเร็วเริ่มต้น</div><div class="eq">\[ v_x=v_0\cos\theta \]</div><div class="lab">คงที่ตลอด</div></div>
+          <div class="f-card pur"><div class="lab">แนวดิ่ง (แกน y)</div><div class="eq">\[ v_y=v_0\sin\theta-gt \]</div><div class="lab">เปลี่ยนแปลงด้วย g</div></div>
+        </div>
+        <div class="f-card" style="margin-top:12px">
+          <div class="lab">ค่าที่ใช้บ่อย (ขว้างขึ้นมุม θ จากพื้นราบ)</div>
+          <div class="eq">\[ t_{\text{ขึ้น}}=\dfrac{v_0\sin\theta}{g}\quad
+            H=\dfrac{v_0^2\sin^2\theta}{2g}\quad T=\dfrac{2v_0\sin\theta}{g}\quad R=\dfrac{v_0^2\sin 2\theta}{g} \]</div>
+        </div>
+        <ul class="clean" style="margin-top:8px;font-size:clamp(.82rem,1.35vw,1rem);color:#c9d8f2">
+          <li>θ = 45° → R ได้ค่ามากที่สุด</li>
+          <li>จุดสูงสุด v_y = 0 แต่ v_x ≠ 0</li>
+          <li>เวลาขึ้น = เวลาลง = T/2</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 17 : EXAMPLE — PROJECTILE ================= -->
+<section class="slide" data-title="ตัวอย่าง — โปรเจกไทล์" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">ตัวอย่างการคำนวณ · EXAMPLE</div>
+    <h2 class="t rise">ขว้างวัตถุ<span class="grad"> มุม 30° ความเร็ว 20 m/s</span></h2>
+    <div class="ex-grid rise" style="margin-top:16px">
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p><b class="hl">ลูกวอลเลย์บอล</b>ถูกขว้างจากพื้นราบด้วยความเร็วเริ่มต้น <b class="hl">20 m/s</b> ในมุม <b class="hl">30°</b> เหนือแนวราบ (g = 9.8 m/s²)</p>
+          <ul class="clean" style="margin-top:10px">
+            <li>1) เวลาที่ลอยได้ก่อนตกแตะพื้นอีกครั้ง?</li>
+            <li>2) ความสูงสูงสุด?</li>
+            <li>3) ระยะพุ่ง (ระยะแนวราบตั้งแต่จุดขว้างถึงจุดตก)?</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3><span class="dot"></span>กำหนดให้</h3>
+          <div class="vars">
+            <b>v₀ = 20 m/s</b> · <b>θ = 30°</b> · <b>g = 9.8 m/s²</b><br><br>
+            \( v_x = 20\cos30^\circ = 17.32 \) m/s<br>
+            \( v_{y0} = 20\sin30^\circ = 10 \) m/s
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stepbox">
+          <div class="step"><p>ข้อ 1 — เวลาอยู่กลางอากาศ \( T=\dfrac{2v_0\sin\theta}{g} = \dfrac{2(10)}{9.8} \approx 2.04 \) s</p></div>
+          <div class="step"><p>ข้อ 2 — ความสูงสุด \( H=\dfrac{v_{y0}^2}{2g}=\dfrac{100}{2(9.8)} \approx 5.10 \) m</p></div>
+          <div class="step"><p>ข้อ 3 — ระยะพุ่ง \( R=\dfrac{v_0^2\sin 2\theta}{g}=\dfrac{400\sin 60^\circ}{9.8}=\dfrac{400(0.866)}{9.8} \approx 35.4 \) m</p></div>
+        </div>
+        <div class="answer">
+          <div class="lab">FINAL ANSWER</div>
+          <div class="eq">T ≈ 2.04 s · H ≈ 5.1 m · R ≈ 35.4 m</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 18 : CIRCULAR MOTION ================= -->
+<section class="slide" data-title="การเคลื่อนที่วงกลม" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">10 · CIRCULAR MOTION</div>
+    <h2 class="t rise">การเคลื่อนที่<span class="grad">วงกลม</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:12px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="cb" cx="40%" cy="35%"><stop offset="0%" stop-color="#c8faff"/><stop offset="100%" stop-color="#22d3ee"/></radialGradient>
+              <marker id="ca" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#e879f9"/></marker>
+              <marker id="cbm" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#22d3ee"/></marker>
+            </defs>
+            <circle cx="160" cy="150" r="110" fill="none" stroke="#4a6aa8" stroke-width="2" stroke-dasharray="6 8"/>
+            <line x1="160" y1="150" x2="160" y2="40" stroke="#a78bfa" stroke-width="2.5"/>
+            <circle cx="160" cy="40" r="14" fill="url(#cb)"/>
+            <line x1="160" y1="40" x2="60" y2="40" stroke="#22d3ee" stroke-width="3" marker-end="url(#cbm)"/>
+            <text x="220" y="85" fill="#c4b5fd" font-size="15" font-family="Kanit">r</text>
+            <line x1="160" y1="40" x2="160" y2="118" stroke="#e879f9" stroke-width="3" marker-end="url(#ca)"/>
+            <text x="170" y="105" fill="#f0abfc" font-size="14" font-family="Kanit">a</text>
+            <text x="44" y="26" fill="#7ff3ff" font-size="14" font-family="Kanit">v (ตั้งฉากกับ r)</text>
+            <circle cx="160" cy="150" r="9" fill="#33507e" stroke="#7db2ff" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="figcap">v ชี้ตามเส้นสัมผัสของวงกลม · การเร่งด้านรัศมีชี้เข้าหาจุดศูนย์กลาง</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card"><div class="lab">รอบ (สัมประสิทธิ์เวลา)</div><div class="eq">\[ T=\dfrac{2\pi r}{v},\quad v=\dfrac{2\pi r}{T} \]</div><div class="lab">หน่วย T : วินาที/รอบ · v : m/s</div></div>
+          <div class="f-card pur"><div class="lab">การเร่งด้านรัศมี</div><div class="eq">\[ a_c=\dfrac{v^2}{r} \]</div><div class="lab">ชี้เข้าหาศูนย์กลาง (m/s²)</div></div>
+        </div>
+        <div class="f-card" style="margin-top:12px">
+          <div class="lab">แรงอ้างอิงพุ่งเข้าศูนย์กลาง (centripetal force)</div>
+          <div class="eq">\[ F_c = \dfrac{mv^2}{r} = \dfrac{4\pi^2mr}{T^2} \]</div>
+        </div>
+        <ul class="clean" style="margin-top:8px;font-size:clamp(.82rem,1.35vw,1rem);color:#c9d8f2">
+          <li>ความเร็วขนาดคงที่แต่<b>ทิศเปลี่ยนตลอดเวลา</b> → จึงมีการเร่ง</li>
+          <li>ตัวอย่าง: รถวนตามโค้งระดับ — แรงเสียดทานจากล้อรถทำหน้าที่เป็นแรงเข้าศูนย์กลาง</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 19 : SHM ================= -->
+<section class="slide" data-title="การเคลื่อนที่แบบฮาร์มอนิกอย่างง่าย" data-section="ม.4 · Mechanics">
+  <div class="stage">
+    <div class="kicker rise">11 · SIMPLE HARMONIC MOTION</div>
+    <h2 class="t rise">การเคลื่อนที่แบบฮาร์มอนิกอย่างง่าย<span class="grad"> (SHM)</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:12px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="sine" x1="0" x2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="55%" stop-color="#7db2ff"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+            <rect x="40" y="18" width="440" height="2" fill="#33507e"/>
+            <g stroke="#4a6aa8" stroke-width="1.4" stroke-dasharray="3 5">
+              <line x1="260" y1="20" x2="260" y2="240"/><line x1="60" y1="20" x2="60" y2="240"/><line x1="460" y1="20" x2="460" y2="240"/>
+            </g>
+            <g>
+              <line x1="60" y1="20" x2="60" y2="46" stroke="#22d3ee" stroke-width="2"/>
+              <line x1="90" y1="46" x2="90" y2="112" stroke="#22d3ee" stroke-width="7" opacity=".85"/>
+              <rect x="36" y="112" width="48" height="14" fill="#22355c" stroke="#66d9e8" stroke-width="2" rx="4"/>
+              <rect x="76" y="104" width="0" height="0"/>
+            </g>
+            <g>
+              <rect x="236" y="112" width="48" height="14" fill="#22355c" stroke="#22d3ee" stroke-width="2.4" rx="4"/>
+              <circle cx="260" cy="119" r="5" fill="#22d3ee"/><circle cx="260" cy="119" r="0"/>
+              <animateTransform attributeName="transform" type="translate" values="200 0; 0 0; 0 0" dur="4s" repeatCount="indefinite"/>
+            </g>
+            <path d="M40 130 C80 40, 120 40, 160 130 S 240 220, 280 130 S 360 40, 400 130 S 460 210, 500 130"
+              fill="none" stroke="url(#sine)" stroke-width="3.2" class="aflow"/>
+            <text x="58" y="252" fill="#7ff3ff" font-size="13" font-family="Kanit">−A</text>
+            <text x="252" y="252" fill="#8fa3c8" font-size="13" font-family="Kanit">0</text>
+            <text x="450" y="252" fill="#7ff3ff" font-size="13" font-family="Kanit">+A</text>
+          </svg>
+        </div>
+        <div class="figcap">ระบบมวล–สปริงสั่นที่ตำแหน่ง x แบบคอสไอน (A = ขนาดการสั่นสูงสุด)</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card"><div class="lab">การสั่นกลับสมมุติ</div><div class="eq">\[ x = A\cos(\omega t) \]</div><div class="lab">x : ตำแหน่งปัจจุบัน (m) · A : ขนาดการสั่น (m)</div></div>
+          <div class="f-card pur"><div class="lab">การเร่ง</div><div class="eq">\[ a = -\omega^2 x \]</div>          <div class="lab">แรงคืนสปริงเชิงเส้น ชี้กลับสู่จุดสมดุล</div></div>
+        </div>
+        <div class="f-card" style="margin-top:12px">
+          <div class="lab">ความถี่ หน่วยเวลา และค่าสำคัญ</div>
+          <div class="eq">\[ f=\dfrac{1}{T},\ \omega=2\pi f \]</div>
+          <div class="lab">f : ความถี่ (Hz) · T : หนึ่งรอบ (s) · ω : ความเร็วเชิงมุม (rad/s)</div>
+        </div>
+        <ul class="clean" style="margin-top:8px;font-size:clamp(.82rem,1.35vw,1rem);color:#c9d8f2">
+          <li><b class="hl">มวล–สปริง:</b> \( T=2\pi\sqrt{\dfrac{m}{k}} \) (k : ความแข็งของสปริง, N/m)</li>
+          <li><b class="hlp">ลูกตุ้มเชิงเดี่ยว:</b> \( T=2\pi\sqrt{\dfrac{L}{g}} \) (มุมเล็กเท่านั้น)</li>
+          <li>พลังงานจลน์ + พลังงานศักย์สลับกันไป แต่รวม \( E=\tfrac12 kA^2 \) คงที่</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SLIDE 20 : DIVIDER — ELECTRICITY & MAGNETISM ================= -->
+<section class="slide" data-title="ส่วนที่ 2 — ไฟฟ้าและแม่เหล็ก (ม.5)" data-section="ส่วนที่ 2">
+  <div class="stage" style="position:relative">
+    <div class="divider-num">02</div>
+    <div class="cols c2" style="align-items:center">
+      <div>
+        <div class="kicker rise">SECTION 2 · ฟิสิกส์ ม.5</div>
+        <h2 class="t rise" style="font-size:clamp(2.2rem,5.5vw,4.4rem)"><span class="grad">ELECTRICITY</span><br>&amp; MAGNETISM</h2>
+        <p class="lead rise">จากไฟฟ้าสถิตและแรงดึงดูดของประจุ ไปสู่กระแสไฟฟ้าที่ส่องไฟทั้งเมือง และจบลงที่การเหนี่ยวไฟฟ้าซึ่งเป็นหัวใจของเจนเนอเรเตอร์และหม้อแปลง</p>
+        <div class="chips rise">
+          <span class="chip p">ไฟฟ้าสถิต</span><span class="chip p">กระแสตรง DC</span>
+          <span class="chip p">กระแสสลับ AC</span><span class="chip p">แม่เหล็กและเหนี่ยวนำ</span>
+        </div>
+      </div>
+      <div class="rise">
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="q1" cx="40%" cy="35%"><stop offset="0%" stop-color="#ffe9f6"/><stop offset="100%" stop-color="#e879f9"/></radialGradient>
+              <radialGradient id="q2" cx="40%" cy="35%"><stop offset="0%" stop-color="#dffcff"/><stop offset="100%" stop-color="#22d3ee"/></radialGradient>
+              <filter id="blur6" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+            </defs>
+            <circle cx="90" cy="160" r="40" fill="#e879f9" opacity=".2" filter="url(#blur6)"/>
+            <circle cx="330" cy="160" r="40" fill="#22d3ee" opacity=".2" filter="url(#blur6)"/>
+            <circle cx="90" cy="160" r="26" fill="url(#q1)"/>
+            <circle cx="330" cy="160" r="26" fill="url(#q2)"/>
+            <text x="90" y="170" fill="#3b0764" font-size="26" text-anchor="middle" font-weight="bold">+</text>
+            <text x="330" y="170" fill="#083a4d" font-size="30" text-anchor="middle" font-weight="bold">−</text>
+            <path d="M124 152 C 176 122, 244 122, 296 152" fill="none" stroke="#c4b5fd" stroke-width="2" class="aflow"/>
+            <path d="M124 160 L 296 160" fill="none" stroke="#c4b5fd" stroke-width="2" opacity=".7"/>
+            <path d="M124 168 C 176 198, 244 198, 296 168" fill="none" stroke="#c4b5fd" stroke-width="2" class="aflow"/>
+            <text x="210" y="105" fill="#9fb4d8" font-size="14" text-anchor="middle" font-family="Kanit">สนามไฟฟ้า จากบวกไปลบ</text>
+            <path d="M210 236 L210 196" stroke="#7db2ff" stroke-width="2" stroke-dasharray="5 6"/>
+            <circle cx="210" cy="245" r="14" fill="none" stroke="#7db2ff" stroke-width="1.5" opacity=".7"/>
+            <circle cx="210" cy="245" r="4" fill="#7db2ff"/>
+            <text x="210" y="288" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">ฟ้าผ่า · การเหนี่ยวนำ · หม้อแปลง</text>
+          </svg>
+        </div>
+        <div class="figcap">ประจุต่างชนิดดึงดูดกัน — จุดกำเนิดของเทคโนโลยีไฟฟ้าทั้งปวง</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 21 : ELECTRIC CHARGES ================= -->
+<section class="slide" data-title="ไฟฟ้าสถิต — ประจุไฟฟ้า" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">12 · ELECTROSTATICS — CHARGE</div>
+    <h2 class="t rise">ไฟฟ้าสถิต — <span class="grad">ประจุไฟฟ้า</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="card purple">
+          <h3><span class="dot"></span>สมบัติของประจุไฟฟ้า</h3>
+          <ul class="clean">
+            <li>ประจุมี 2 ชนิด: <b class="hlp">บวก (+)</b> และ <b class="hl">ลบ (−)</b></li>
+            <li>ประจุชนิดเดียวกัน <b>ผลักกัน</b> · ประจุต่างชนิด <b>ดึงดูดกัน</b></li>
+            <li><b class="hl">ประจุมีควอนตัม</b> — มีเพียงจำนวนคูณเต็มของ \( e \): \( Q = ne \)</li>
+            <li><b class="hl">การอนุรักษ์ประจุ</b> — ประจุรวมของระบบปิดมีค่าคงที่ (สร้างหรือทำลายใหม่ไม่ได้)</li>
+          </ul>
+          <div class="vars" style="margin-top:10px">
+            <b>Q</b> ประจุ <span class="u">(C)</span> · <b>e</b> ประจุปฐมภูมิ \( =1.602\times10^{-19} \) C · <b>n</b> จำนวนอิเล็กตรอน
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3><span class="dot"></span>ตัวนำ และ ฉนวน</h3>
+          <ul class="clean">
+            <li><b class="hl">ตัวนำ</b> — อิเล็กตรอนเคลื่อนที่ได้สะดวก เช่น โลหะ สารละลายอิเล็กไทต์</li>
+            <li><b class="hlp">ฉนวน</b> — อิเล็กตรอนเคลื่อนที่ได้ยาก เช่น ยาง พลาสติก แก้ว</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card purple">
+          <h3><span class="dot"></span>วิธีทำให้วัตถุมีประจุ</h3>
+          <ul class="clean">
+            <li><b class="hl">การขัดสี (friction)</b> — วัตถุสองชิ้นถูกขัดถูกัน อิเล็กตรอนถ่ายเทกัน เกิดประจุตรงข้ามแต่เท่ากัน</li>
+            <li><b class="hlp">การสัมผัส (conduction)</b> — สัมผัสวัตถุมีประจุกับวัตถุกลาง ประจุถ่ายเทกันเอง</li>
+            <li><b class="hl">การเหนี่ยวนำ (induction)</b> — เอาประจุเข้าใกล้โดยไม่ต้องสัมผัส ทำให้เกิดการแยกประจุในวัตถุ</li>
+          </ul>
+        </div>
+        <div class="f-card pur" style="margin-top:14px">
+          <div class="lab">หน่วยประจุ — คูลอมบ์ (C)</div>
+          <div class="eq">\[ Q = n\,e \qquad e = 1.602\times10^{-19}\ \mathrm{C} \]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 22 : COULOMB'S LAW ================= -->
+<section class="slide" data-title="กฎของคูลอมบ์" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">12 · COULOMB'S LAW</div>
+    <h2 class="t rise">กฎของ<span class="grad">คูลอมบ์</span> พร้อมตัวอย่าง</h2>
+    <div class="ex-grid rise" style="margin-top:14px">
+      <div>
+        <div class="f-card pur">
+          <div class="f-star">สูตร</div>
+          <div class="eq">\[ F = k\,\dfrac{|q_1 q_2|}{r^2} \]</div>
+          <div class="lab">F : แรงไฟฟ้าระหว่างประจุ (N) · k = 8.99×10⁹ N·m²/C²</div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>แต่ละตัวแปร</h3>
+          <ul class="clean">
+            <li><b class="hl">q₁, q₂</b> ขนาดประจุ <span class="u">(C)</span></li>
+            <li><b class="hl">r</b> ระยะห่างระหว่างศูนย์กลางประจุ <span class="u">(m)</span></li>
+            <li><b class="hl">k</b> ค่าคงที่คูลอมบ์ \( 8.99\times10^9 \ \mathrm{N\,m^2/C^2} \)</li>
+            <li>ทิศของแรงอยู่บรรทัดเดียวกับประจุ: ชนิดเดียวกันผลักกัน, ต่างชนิดดึงดูดกัน</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p>ลูกโลหะลูกหนึ่งมีประจุ <b class="hl">+2 μC</b> อีกลูกมีประจุ <b class="hl">+2 μC</b> วางห่างกัน <b class="hl">20 cm</b> — หาขนาดแรงไฟฟ้าที่กระทำต่อกัน</p>
+          <div class="stepbox" style="margin-top:8px">
+            <div class="step"><p>ความเตรียม: \( q_1=q_2=2\times10^{-6} \) C, \( r=0.20 \) m</p></div>
+            <div class="step"><p>แทนในสูตร \( F=\dfrac{(8.99\times10^9)(2\times10^{-6})^2}{(0.20)^2} = \dfrac{(8.99\times10^9)(4\times10^{-12})}{0.04} \approx 0.9 \) N</p></div>
+            <div class="answer" style="margin-top:4px">
+              <div class="lab">FINAL ANSWER</div>
+              <div class="eq">F ≈ 0.9 N (ผลักกัน เพราะประจุชนิดเดียว)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 23 : ELECTRIC FIELD ================= -->
+<section class="slide" data-title="สนามไฟฟ้า" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">12 · ELECTRIC FIELD</div>
+    <h2 class="t rise">สนามไฟฟ้า<span class="grad"> (Electric Field)</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="ef" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker>
+            </defs>
+            <g stroke="#22d3ee" stroke-width="2" fill="none">
+              <path d="M150 150 L60 150" marker-end="url(#ef)" opacity=".85"/>
+              <path d="M150 150 L74 108" marker-end="url(#ef)" opacity=".85"/>
+              <path d="M150 150 L74 192" marker-end="url(#ef)" opacity=".85"/>
+              <path d="M150 150 L90 78" marker-end="url(#ef)" opacity=".7"/>
+              <path d="M150 150 L90 222" marker-end="url(#ef)" opacity=".7"/>
+            </g>
+            <g stroke="#e879f9" stroke-width="2" fill="none">
+              <path d="M330 240 L404 240" marker-end="url(#ef)" opacity=".8"/>
+              <path d="M330 240 L396 208" marker-end="url(#ef)" opacity=".6"/>
+              <path d="M330 240 L396 272" marker-end="url(#ef)" opacity=".6"/>
+              <path d="M330 240 L326 160" marker-end="url(#ef)" opacity=".6"/>
+            </g>
+            <circle cx="150" cy="150" r="20" fill="url(#pgq)"/>
+            <text x="150" y="157" fill="#3b0764" font-size="18" text-anchor="middle" font-weight="bold">+</text>
+            <defs><radialGradient id="ngq" cx="40%" cy="35%"><stop offset="0%" stop-color="#dffcff"/><stop offset="100%" stop-color="#22d3ee"/></radialGradient></defs>
+            <circle cx="330" cy="240" r="20" fill="url(#ngq)"/>
+            <text x="330" y="248" fill="#083a4d" font-size="20" text-anchor="middle" font-weight="bold">−</text>
+            <text x="150" y="120" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">+q : เส้นแพร่ออก</text>
+            <text x="330" y="286" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">−q : เส้นชี้เข้า</text>
+          </svg>
+        </div>
+        <div class="figcap">เส้นแรงไฟฟ้า: หนาแน่น = สนามแรง · ชี้จาก + ไป − · ไม่มีการตัดกัน</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">นิยาม</div><div class="eq">\[ \vec{E} = \dfrac{\vec{F}}{q_0} \]</div><div class="lab">E : สนามไฟฟ้า (N/C) · q₀ : ประจุทดสอบบวก (C)</div></div>
+          <div class="f-card"><div class="lab">จากประจุจุด</div><div class="eq">\[ E = k\dfrac{|q|}{r^2} \]</div><div class="lab">r : ระยะจากประจุ (m)</div></div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>จุดสำคัญ</h3>
+          <ul class="clean">
+            <li>สนามไฟฟ้าเป็น <b>เวกเตอร์</b>: ที่จุดใด ๆ แรงเองคือ \( \vec{F}=q_0\vec{E} \)</li>
+            <li>สนามรวม = รวมเวกเตอร์ของสนามจากแต่ละประจุ (หลักการซ้อนทับ)</li>
+            <li>ประจุบวก: เส้นแรงพุ่งออกจากประจุ · ประจุลบ: เส้นแรงชี้เข้าหาประจุ</li>
+            <li>สองแผ่นขนานมีประจุตรงข้ามกัน → สนามระหว่างแผ่นสม่ำเสมอ (uniform field)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 24 : POTENTIAL & POTENTIAL ENERGY ================= -->
+<section class="slide" data-title="ศักย์ไฟฟ้าและพลังงานศักย์" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">12 · POTENTIAL &amp; ENERGY</div>
+    <h2 class="t rise">ศักย์ไฟฟ้า<span class="grad"> และพลังงานศักย์ไฟฟ้า</span></h2>
+    <div class="cols c3 rise" style="margin-top:16px">
+      <div class="f-card pur"><div class="lab">ศักย์ไฟฟ้าจากประจุจุด</div><div class="eq">\[ V = k\dfrac{q}{r} \]</div><div class="lab">V : ศักย์ไฟฟ้า (V = J/C) · r : ระยะจากประจุ (m)</div></div>
+      <div class="f-card"><div class="lab">พลังงานศักย์ไฟฟ้า</div><div class="eq">\[ E_p = qV \]</div><div class="lab">E_p : พลังงานศักย์ (J) · q : ประจุที่วางในสนาม (C)</div></div>
+      <div class="f-card pur"><div class="lab">สนามสม่ำเสมอ (แผ่นขนาน)</div><div class="eq">\[ V = Ed \]</div><div class="lab">E : สนามไฟฟ้า (N/C) · d : ระยะตามทิศสนาม (m)</div></div>
+    </div>
+    <div class="cols c2 rise" style="margin-top:16px">
+      <div class="card accent">
+        <h3><span class="dot"></span>งานของสนามไฟฟ้า</h3>
+        <ul class="clean">
+          <li>ย้ายประจุ q ระหว่างจุดที่มีผลต่างศักย์ \( \Delta V \): งาน \( W = q\,\Delta V \)</li>
+          <li>ประจุบวกเคลื่อนตามทิศสนาม (จากศักย์สูงสู่ศักย์ต่ำ) พลังงานศักย์ลดลง กลายเป็นพลังงานจลน์</li>
+          <li>หน่วยเสริม: 1 eV = \( 1.602\times10^{-19} \) J ใช้วัดพลังงานกับอนุภาค</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>เข้าใจง่าย ๆ</h3>
+        <ul class="clean">
+          <li>ศักย์ไฟฟ้าใช้วัด "ความพร้อมที่จะดันดึงประจุ" ที่จุดหนึ่งในสนาม — ไม่ต้องมีประจุจริงก็นิยามได้</li>
+          <li>ศักย์ไฟฟ้าเป็น <span class="hlp">สเกลาร์</span> — ศักย์รวมที่จุดใด ๆ = ผลรวมตรง ๆ ของศักย์จากทุกประจุ</li>
+          <li>พลังงานศักย์ไฟฟ้าของประจุในสนาม = งานที่สนามทำเพื่อไปวางประจุที่นั่น (จากอันไกล)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 25 : CAPACITORS ================= -->
+<section class="slide" data-title="ตัวเก็บประจุ" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">12 · CAPACITORS</div>
+    <h2 class="t rise">ตัวเก็บประจุ<span class="grad"> (Capacitor)</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 460 260" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="cc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#e879f9"/></marker></defs>
+            <rect x="120" y="70" width="18" height="120" fill="#254a7c" stroke="#7db2ff" stroke-width="2" rx="2"/>
+            <rect x="320" y="70" width="18" height="120" fill="#254a7c" stroke="#7db2ff" stroke-width="2" rx="2"/>
+            <g stroke="#e879f9" stroke-width="2.2">
+              <g transform="translate(60,0)"><line x1="0" y1="86" x2="0" y2="110" marker-end="url(#cc)"/></g>
+              <g transform="translate(96,0)"><line x1="0" y1="94" x2="0" y2="118" marker-end="url(#cc)"/></g>
+              <g transform="translate(96,150)"><line x1="0" y1="112" x2="0" y2="138" marker-end="url(#cc)" transform="rotate(180 0 125)"/></g>
+              <g transform="translate(60,168)"><line x1="0" y1="104" x2="0" y2="130" marker-end="url(#cc)" transform="rotate(180 0 117)"/></g>
+            </g>
+            <text x="129" y="60" fill="#7ff3ff" font-size="14" font-family="Kanit" text-anchor="middle">+Q</text>
+            <text x="329" y="60" fill="#f0abfc" font-size="14" font-family="Kanit" text-anchor="middle">−Q</text>
+            <text x="229" y="132" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">d (ระยะห่างระหว่างแผ่น)</text>
+            <rect x="160" y="92" width="140" height="76" fill="none" stroke="#22d3ee" stroke-width="1.6" stroke-dasharray="5 7" opacity=".55"/>
+            <text x="230" y="225" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">ช่องว่างระหว่างแผ่นมีฉนวน (d เล็กและ A ใหญ่ → เก็บประจุได้มาก)</text>
+          </svg>
+        </div>
+        <div class="figcap">แผ่นโลหะสองแผ่นขนานกัน ช่องว่างคั่นด้วยฉนวน — อุปกรณ์เก็บพลังงานในรูปสนามไฟฟ้า</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">ความจุ</div><div class="eq">\[ C = \dfrac{Q}{V} \]</div><div class="lab">C : ความจุ (F) · Q : ประจุ (C) · V : ต่างศักย์ (V)</div></div>
+          <div class="f-card"><div class="lab">แผ่นขนาน</div><div class="eq">\[ C = \dfrac{\varepsilon_0 A}{d} \]</div><div class="lab">A : พื้นที่แผ่น (m²) · d : ระยะห่าง (m) · ε₀ = 8.85×10⁻¹² F/m</div></div>
+        </div>
+        <div class="f-card pur" style="margin-top:12px">
+          <div class="lab">พลังงานเก็บในตัวเก็บประจุ</div>
+          <div class="eq">\[ E = \tfrac12 CV^2 = \tfrac12 QV \]</div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3><span class="dot"></span>การต่อตัวเก็บประจุต่อกัน</h3>
+          <ul class="clean">
+            <li><b class="hl">อนุกรม:</b> \( \dfrac{1}{C_{\text{รวม}}} = \dfrac{1}{C_1}+\dfrac{1}{C_2}+\cdots \) (สูตรตรงข้ามกับความต้านทาน)</li>
+            <li><b class="hlp">ขนาน:</b> \( C_{\text{รวม}} = C_1+C_2+\cdots \)</li>
+            <li>ความจุ 1 F เป็นค่าใหญ่มาก การใช้จริงมักหมายถึง μF, nF</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 26 : DC — CURRENT, VOLTAGE, RESISTANCE ================= -->
+<section class="slide" data-title="กระแสไฟฟ้าดีซี — กระแส แรงดัน ความต้านทาน" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">13 · DIRECT CURRENT — BASICS</div>
+    <h2 class="t rise">กระแสไฟฟ้า · แรงดัน · <span class="grad">ความต้านทาน</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="dc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <path d="M100 210 L100 130 L200 130 L200 90 L360 90 L360 130 L420 130 L420 210 Z" fill="none" stroke="#7db2ff" stroke-width="2.5"/>
+            <rect x="290" y="76" width="40" height="28" fill="#0a2740" stroke="#22d3ee" stroke-width="2"/>
+            <rect x="302" y="70" width="16" height="8" fill="#22d3ee"/>
+            <text x="310" y="62" fill="#7ff3ff" font-size="13" text-anchor="middle" font-family="Kanit">แบตเตอรี่ V</text>
+            <rect x="88" y="200" width="24" height="20" fill="#0a2740" stroke="#7db2ff" stroke-width="2"/>
+            <rect x="412" y="200" width="24" height="20" fill="#0a2740" stroke="#7db2ff" stroke-width="2"/>
+            <g transform="translate(212,118)">
+              <rect x="0" y="8" width="140" height="24" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+              <text x="70" y="26" fill="#c4b5fd" font-size="14" text-anchor="middle" font-family="Kanit">R (ลวดต้าน)</text>
+            </g>
+            <g stroke="#22d3ee" stroke-width="2.2">
+              <line x1="120" y1="205" x2="150" y2="205" marker-end="url(#dc)"/>
+              <line x1="200" y1="120" x2="200" y2="110" marker-end="url(#dc)" transform="rotate(90 200 115)" opacity="0"/>
+              <line x1="150" y1="90" x2="180" y2="90" marker-end="url(#dc)"/>
+              <line x1="380" y1="90" x2="410" y2="90" marker-end="url(#dc)" opacity=".9"/>
+            </g>
+            <text x="330" y="212" fill="#7ff3ff" font-size="13" font-family="Kanit">กระแส I</text>
+            <text x="40" y="130" fill="#9fb4d8" font-size="13" font-family="Kanit">วงจรปิดเรียบง่าย</text>
+          </svg>
+        </div>
+        <div class="figcap">กระแสตรง (DC): ไหลทิศเดียวคงที่ เช่น จากแบตเตอรี่มือถือ</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">กระแสไฟฟ้า</div><div class="eq">\[ I = \dfrac{\Delta Q}{\Delta t} \]</div><div class="lab">I : กระแส (A) · Q : ประจุ (C) · t : เวลา (s)</div></div>
+          <div class="f-card"><div class="lab">ความต้านทานของลวดต้าน</div><div class="eq">\[ R = \dfrac{\rho L}{A} \]</div>          <div class="lab">ρ : สัมประสิทธิ์ความต้าน (Ω·m) · L : ความยาว (m) · A : พื้นที่หน้าตัด (m²)</div></div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>สรุปความหมาย</h3>
+          <ul class="clean">
+            <li><b class="hl">กระแส (I)</b> — อัตราการไหลของประจุผ่านพื้นที่หน้าตัดต่อเวลา (แอมป์, A = C/s)</li>
+            <li><b class="hlp">ความต่างศักย์ (V)</b> — พลังงานที่ให้ต่อประจุหนึ่งหน่วย (โวลต์, V = J/C)</li>
+            <li><b class="hl">ความต้านทาน (R)</b> — การต่อต้านการไหลของกระแส (โอม, Ω)</li>
+            <li>ประจุบวกอนุรักษ์สถานะทิศของกระแสดั้งเดิม (conventional current)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 27 : OHM'S LAW + EXAMPLE ================= -->
+<section class="slide" data-title="กฎออมพร้อมตัวอย่าง" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">13 · OHM'S LAW + EXAMPLE</div>
+    <h2 class="t rise">กฎของ<span class="grad">ออม</span> พร้อมตัวอย่าง</h2>
+    <div class="ex-grid rise" style="margin-top:14px">
+      <div>
+        <div class="f-card">
+          <div class="f-star">กฎของออม</div>
+          <div class="eq">\[ V = IR \quad\Rightarrow\quad I=\dfrac{V}{R},\ \ R=\dfrac{V}{I} \]</div>
+          <div class="lab">V : ความต่างศักย์ (V) · I : กระแส (A) · R : ความต้านทาน (Ω)</div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>ใช้อย่างไร</h3>
+          <ul class="clean">
+            <li>วงจรกระแสตรงที่ลวดต้านทำตามกันอยู่คงที่: กระแสแปรผันตรงกับความต่างศักย์</li>
+            <li>เพิ่ม R ที่ V เท่าเดิม → I ลดลง (ตรงข้ามกัน)</li>
+            <li>กราฟ I กับ V ของลวดต้านก๊กชี้ตรงผ่านจุดกำเนิด</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p>ลวดต้านต่อกับแบตเตอรี่ <b class="hl">12 V</b> มีกระแสไหลผ่าน <b class="hl">1.2 A</b></p>
+          <ul class="clean" style="margin-top:8px">
+            <li>1) ความต้านทานของลวดต้าน?</li>
+            <li>2) กำลังไฟฟ้าที่ลวดต้านใช้?</li>
+          </ul>
+          <div class="stepbox" style="margin-top:10px">
+            <div class="step"><p>ข้อ 1 — \( R = \dfrac{V}{I} = \dfrac{12}{1.2} = 10 \ \Omega \)</p></div>
+            <div class="step"><p>ข้อ 2 — \( P = VI = (12)(1.2) = 14.4 \) W</p></div>
+          </div>
+          <div class="answer" style="margin-top:12px">
+            <div class="lab">FINAL ANSWER</div>
+            <div class="eq">R = 10 Ω · P = 14.4 W</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 28 : SERIES AND PARALLEL ================= -->
+<section class="slide" data-title="วงจรอนุกรมและวงจรขนาน" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">13 · SERIES vs PARALLEL</div>
+    <h2 class="t rise">วงจรอนุกรม<span class="grad"> กับ วงจรขนาน</span></h2>
+    <div class="card accent rise" style="margin-top:14px;padding:12px clamp(10px,1.8vw,20px)">
+      <table class="tbl">
+        <tr><th style="width:21%">ประเด็นเปรียบเทียบ</th><th>ต่ออนุกรม (Series)</th><th>ต่อขนาน (Parallel)</th></tr>
+        <tr><td class="rowhead">ทางไหลของกระแส</td><td>ทางเดียว ไหลผ่านทุกตัวเรียงไป</td><td>แตกสาขาหลายทางอิสระกัน</td></tr>
+        <tr><td class="rowhead">กระแส I</td><td><b class="hl">เท่ากัน</b>ทุกตัว</td><td><b class="hlp">แบ่งกัน</b>ตามแต่ละแขนง แล้วรวมกลับเป็นกระแสรวม</td></tr>
+        <tr><td class="rowhead">ความต่างศักย์ V</td><td>แบ่งกัน (ผลรวม = ของแหล่งกำเนิด)</td><td><b class="hlp">เท่ากัน</b>ทุกแขนง</td></tr>
+        <tr><td class="rowhead">ความต้านรวม</td><td>\( R_{\text{รวม}} = R_1+R_2+\cdots \) (ใหญ่ขึ้น)</td><td>\( \dfrac{1}{R_{\text{รวม}}}=\dfrac{1}{R_1}+\dfrac{1}{R_2}+\cdots \) (R รวมเล็กกว่าตัวเล็กสุด)</td></tr>
+        <tr><td class="rowhead">ตัวหนึ่งพัง</td><td>วงจรขาด หยุดทั้งวงจร</td><td>แขนงอื่นยังทำงานได้ตามปกติ</td></tr>
+      </table>
+    </div>
+    <div class="cols c2 rise" style="margin-top:14px">
+      <div class="fig">
+        <svg class="diagram" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 120 L20 40 L60 40 M240 40 L280 40 L280 120 L20 120" fill="none" stroke="#7db2ff" stroke-width="2"/>
+          <rect x="60" y="52" width="34" height="14" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <rect x="130" y="52" width="34" height="14" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <rect x="200" y="52" width="34" height="14" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <path d="M94 59 H130 M164 59 H200 M234 59 H240" stroke="#7db2ff" stroke-width="2"/>
+          <text x="150" y="100" fill="#9fb4d8" font-size="12" text-anchor="middle" font-family="Kanit">อนุกรม : R รวม = R₁+R₂+R₃</text>
+        </svg>
+      </div>
+      <div class="fig">
+        <svg class="diagram" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 120 L30 30 M270 120 L270 30 M30 120 H270" fill="none" stroke="#7db2ff" stroke-width="2"/>
+          <path d="M30 30 H70 M110 30 H150 M190 30 H230 M230 30 H270" stroke="#7db2ff" stroke-width="2"/>
+          <path d="M70 30 V45 M230 30 V45 M70 75 H110 M110 75 H190 M190 75 H230 M70 75 V60 M230 75 V60" stroke="#7db2ff" stroke-width="2"/>
+          <rect x="70" y="45" width="30" height="15" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <rect x="105" y="30" width="30" height="15" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <rect x="140" y="45" width="30" height="15" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <rect x="190" y="45" width="30" height="15" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <path d="M30 90 H70 M110 90 H190 M230 90 H270 M70 90 V75 M230 90 V75" stroke="#7db2ff" stroke-width="2"/>
+          <rect x="70" y="75" width="30" height="15" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <rect x="190" y="75" width="30" height="15" fill="none" stroke="#a78bfa" stroke-width="2.4"/>
+          <text x="150" y="125" fill="#9fb4d8" font-size="12" text-anchor="middle" font-family="Kanit">ขนาน : 1/R รวม = 1/R₁+1/R₂+…</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 29 : ELECTRICAL POWER & ENERGY ================= -->
+<section class="slide" data-title="กำลังและพลังงานไฟฟ้า" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">13 · POWER &amp; ENERGY</div>
+    <h2 class="t rise">กำลังไฟฟ้า<span class="grad"> และพลังงานไฟฟ้า</span></h2>
+    <div class="cols c3 rise" style="margin-top:16px">
+      <div class="f-card"><div class="lab">กำลังไฟฟ้า</div><div class="eq">\[ P = VI = I^2R = \dfrac{V^2}{R} \]</div><div class="lab">P : กำลัง (W = J/s)</div></div>
+      <div class="f-card pur"><div class="lab">พลังงานไฟฟ้า</div><div class="eq">\[ W = P\,t = VIt \]</div><div class="lab">W : พลังงาน (J) · t : เวลา (s)</div></div>
+      <div class="f-card"><div class="lab">หน่วยค่าไฟฟ้า</div><div class="eq">\[ 1\ \mathrm{kW\,h} = 3.6\times10^6\ \mathrm{J} \]</div><div class="lab">1 หน่วยไฟ = 1 kWh</div></div>
+    </div>
+    <div class="cols c2 rise" style="margin-top:16px">
+      <div class="card accent">
+        <h3><span class="dot"></span>เลือกใช้ในโจทย์</h3>
+        <ul class="clean">
+          <li>รู้ V กับ I → ใช้ \( P=VI \)</li>
+          <li>รู้ I กับ R → ใช้ \( P=I^2R \) (ความร้อนในลวดต้าน)</li>
+          <li>รู้ V กับ R → ใช้ \( P=V^2/R \)</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>ตัวอย่างสั้น ๆ</h3>
+        <p>หลอดไฟ 60 W เปิดติดต่อกัน 5 ชั่วโมง</p>
+        <ul class="clean" style="margin-top:6px">
+          <li>พลังงานที่ใช้ = 60 W × 5 h = <b class="hl">300 Wh = 0.3 หน่วย</b></li>
+          <li>ถ้าค่าไฟหน่วยละ 4 บาท → ใช้เงินประมาณ <b class="hl">1.20 บาท</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 30 : AC WAVEFORMS ================= -->
+<section class="slide" data-title="กระแสไฟฟ้าแอซี — รูปคลื่นและความถี่" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">14 · ALTERNATING CURRENT</div>
+    <h2 class="t rise">ไฟฟ้ากระแสสลับ<span class="grad"> — รูปคลื่น ความถี่ คาบ</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="acsine" x1="0" x2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#7db2ff"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
+            <marker id="ack" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#e879f9"/></marker></defs>
+            <line x1="20" y1="120" x2="500" y2="120" stroke="#33507e" stroke-width="1.5"/>
+            <path d="M20 120 Q 75 10, 130 120 T 240 120 T 350 120 T 460 120" fill="none" stroke="url(#acsine)" stroke-width="3.4" class="aflow"/>
+            <line x1="130" y1="120" x2="130" y2="104" stroke="#e879f9" stroke-width="2" marker-end="url(#ack)"/>
+            <text x="75" y="48" fill="#f0abfc" font-size="13" text-anchor="middle" font-family="Kanit">สูงสุด V₀</text>
+            <line x1="20" y1="106" x2="240" y2="106" stroke="#2a4066" stroke-width="1" stroke-dasharray="4 6" opacity=".9"/>
+            <path d="M20 116 v8 M240 116 v8" stroke="#5f7398" stroke-width="1.5"/>
+            <text x="130" y="150" fill="#8fa3c8" font-size="13" text-anchor="middle" font-family="Kanit">1 คาบ T</text>
+            <line x1="20" y1="140" x2="240" y2="140" stroke="#2a4066" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <line x1="240" y1="140" x2="460" y2="140" stroke="#2a4066" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <text x="350" y="162" fill="#8fa3c8" font-size="13" text-anchor="middle" font-family="Kanit">อีก 1 คาบ → คาบเวลาคงที่</text>
+          </svg>
+        </div>
+        <div class="figcap">แรงเคลื่อนไฟฟ้า AC เปลี่ยนทั้งขนาดและทิศเป็นระยะแบบไซน์</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">สมการ</div><div class="eq">\[ v(t)=V_0\sin(\omega t) \]</div><div class="lab">V₀ : ค่าพีค (V) · ω = 2πf (rad/s)</div></div>
+          <div class="f-card"><div class="lab">ความถี่ &amp; คาบ</div><div class="eq">\[ f=\dfrac{1}{T} \]</div><div class="lab">f : ความถี่ (Hz) · T : คาบ (s)</div></div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>ความรู้ประจำประเทศไทย</h3>
+          <ul class="clean">
+            <li>ระบบไฟบ้านไทย: <b class="hl">f = 50 Hz</b> → \( T = 1/50 = 0.02 \) s</li>
+            <li>แรงดัน 220 V ที่บอกในป้าย คือ<b>ค่ารากสี่เหลี่ยมเฉลี่ย (RMS)</b> ไม่ใช่ค่าพีค</li>
+            <li>กระแสสลับได้จากเครื่องกำเนิดไฟฟ้า เหมาะกับการเปลี่ยนแรงดันด้วยหม้อแปลง</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 31 : RMS ================= -->
+<section class="slide" data-title="ค่า RMS ของกระแสสลับ" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">14 · RMS VALUES</div>
+    <h2 class="t rise">ค่ารากสี่เหลี่ยมเฉลี่ย<span class="grad"> (RMS)</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">RMS ของแรงดัน</div><div class="eq">\[ V_{\text{rms}}=\dfrac{V_0}{\sqrt 2} \approx 0.707\,V_0 \]</div></div>
+          <div class="f-card"><div class="lab">RMS ของกระแส</div><div class="eq">\[ I_{\text{rms}}=\dfrac{I_0}{\sqrt 2} \]</div></div>
+        </div>
+        <div class="f-card" style="margin-top:12px">
+          <div class="lab">กำลังเฉลี่ยในวงจร AC</div>
+          <div class="eq">\[ P_{\text{avg}}=V_{\text{rms}}\,I_{\text{rms}}=\dfrac{V_0 I_0}{2} \]</div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3><span class="dot"></span>ทำไมต้องใช้ RMS</h3>
+          <ul class="clean">
+            <li>ค่าเฉลี่ยของไซน์หนึ่งคาบ = 0 ใช้เปรียบเทียบพลังงานไม่ได้</li>
+            <li>RMS คือค่ากระแสตรงที่ให้<b class="hl">ความร้อนเท่ากัน</b>ในลวดต้านเดียวกัน</li>
+            <li>เข็มมิเตอร์และป้ายแรงดันบนอุปกรณ์ ล้วนอ่านค่า RMS</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>ตัวอย่างสั้น ๆ — ไฟบ้านไทย</h3>
+          <p>แรงดันบ้าน \( V_{\text{rms}} = 220 \) V ที่ 50 Hz — ค่าพีคเท่าใด?</p>
+          <div class="stepbox" style="margin-top:10px">
+            <div class="step"><p>\( V_0 = \sqrt 2\,V_{\text{rms}} = 220 \times 1.414 \approx 311 \) V</p></div>
+            <div class="step"><p>คาบ \( T=1/50 = 0.02 \) s → แรงดันแกว่งจาก +311 V ถึง −311 V ทุก 0.02 s</p></div>
+          </div>
+          <div class="answer" style="margin-top:12px">
+            <div class="lab">FINAL ANSWER</div>
+            <div class="eq">V₀ ≈ 311 V · T = 0.02 s</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 32 : TRANSFORMERS ================= -->
+<section class="slide" data-title="หม้อแปลง" data-section="ม.5 · Electricity">
+  <div class="stage">
+    <div class="kicker violet rise">14 · TRANSFORMERS</div>
+    <h2 class="t rise">หม้อแปลง<span class="grad"> พร้อมตัวอย่าง</span></h2>
+    <div class="ex-grid rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="tf" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <rect x="150" y="60" width="120" height="160" fill="#12203c" stroke="#4a6aa8" stroke-width="2" rx="6"/>
+            <rect x="178" y="100" width="64" height="80" fill="none" stroke="#4a6aa8" stroke-width="2" rx="4"/>
+            <g stroke="#a78bfa" stroke-width="2"><rect x="128" y="90" width="22" height="100" fill="#0a2740" rx="10"/><rect x="270" y="90" width="22" height="100" fill="#0a2740" rx="10"/></g>
+            <text x="139" y="150" fill="#c4b5fd" font-size="12" text-anchor="middle" transform="rotate(-90 139 140)"></text>
+            <text x="281" y="150" fill="#c4b5fd" font-size="11" text-anchor="middle" transform="rotate(-90 281 140)"></text>
+            <text x="139" y="53" fill="#f0abfc" font-size="12" text-anchor="middle" font-family="Kanit">N_p = 1000</text>
+            <text x="281" y="53" fill="#7ff3ff" font-size="12" text-anchor="middle" font-family="Kanit">N_s = 100</text>
+            <text x="100" y="205" fill="#f0abfc" font-size="13" text-anchor="middle" font-family="Kanit">คอยล์ปฐมภูมิ</text>
+            <text x="322" y="205" fill="#7ff3ff" font-size="13" text-anchor="middle" font-family="Kanit">คอยล์ทุติยภูมิ</text>
+            <text x="210" y="40" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">แกนเหล็กอ่อนส่งผ่านสนามแม่เหล็กระหว่างสองคอยล์</text>
+            <text x="210" y="262" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit"></text>
+          </svg>
+        </div>
+        <div class="f-card pur" style="margin-top:10px">
+          <div class="lab">ความสัมพันธ์สำคัญ</div>
+          <div class="eq">\[ \dfrac{V_s}{V_p}=\dfrac{N_s}{N_p} \qquad P_p=P_s \Rightarrow I_pV_p=I_sV_s \]</div>
+          <div class="lab">N : จำนวนรอบ · p : ปฐมภูมิ · s : ทุติยภูมิ (หม้อแปลงอุดมคติ)</div>
+        </div>
+      </div>
+      <div>
+        <div class="card accent">
+          <h3><span class="dot"></span>โจทย์</h3>
+          <p>หม้อแปลงคอยล์ปฐมภูมิ <b class="hl">1 000 รอบ</b> ทุติยภูมิ <b class="hl">100 รอบ</b> ต่อแหล่งกำเนิด <b class="hl">220 V</b> (มองเป็นหม้อแปลงอุดมคติ)</p>
+          <ul class="clean" style="margin-top:8px">
+            <li>1) แรงดันด้านทุติยภูมิ?</li>
+            <li>2) ถ้ากระแสด้านทุติยภูมิ 2 A กระแสด้านปฐมภูมิเท่าใด?</li>
+          </ul>
+          <div class="stepbox" style="margin-top:10px">
+            <div class="step"><p>ข้อ 1 — \( V_s = \dfrac{N_s}{N_p}V_p = \dfrac{100}{1000}(220) = 22 \) V</p></div>
+            <div class="step"><p>ข้อ 2 — \( I_p = \dfrac{I_sV_s}{V_p} = \dfrac{(2)(22)}{220} = 0.2 \) A</p></div>
+          </div>
+          <div class="answer" style="margin-top:12px">
+            <div class="lab">FINAL ANSWER</div>
+            <div class="eq">Vs = 22 V (step-down) · Ip = 0.2 A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 33 : MAGNETIC FIELD & FORCE ================= -->
+<section class="slide" data-title="แม่เหล็กและแรงแม่เหล็ก" data-section="ม.5 · Magnetism">
+  <div class="stage">
+    <div class="kicker violet rise">15 · MAGNETIC FIELD & FORCE</div>
+    <h2 class="t rise">สนามแม่เหล็ก<span class="grad"> และแรงแม่เหล็ก</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="mf" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <rect x="120" y="60" width="60" height="160" fill="#182a4e" stroke="#7db2ff" stroke-width="2" rx="4"/>
+            <rect x="180" y="60" width="60" height="160" fill="#3b0764" stroke="#e879f9" stroke-width="2" rx="4"/>
+            <text x="150" y="45" fill="#7ff3ff" font-size="15" text-anchor="middle" font-weight="bold">N</text>
+            <text x="210" y="45" fill="#f0abfc" font-size="15" text-anchor="middle" font-weight="bold">S</text>
+            <g stroke="#22d3ee" stroke-width="1.8" fill="none">
+              <path d="M110 100 C 60 92, 30 110, 22 140" marker-end="url(#mf)"/>
+              <path d="M110 140 C 70 140, 50 140, 30 140" marker-end="url(#mf)"/>
+              <path d="M110 180 C 60 188, 30 170, 22 140" marker-end="url(#mf)" opacity=".7"/>
+              <path d="M250 100 C 300 92, 330 110, 338 140" marker-end="url(#mf)"/>
+              <path d="M250 140 C 290 140, 310 140, 330 140" marker-end="url(#mf)"/>
+              <path d="M250 180 C 300 188, 330 170, 338 140" marker-end="url(#mf)" opacity=".7"/>
+              <path d="M120 92 C 150 66, 200 66, 230 92" marker-end="url(#mf)" opacity=".55"/>
+              <path d="M120 188 C 150 214, 200 214, 230 188" marker-end="url(#mf)" opacity=".55"/>
+            </g>
+            <text x="380" y="144" fill="#9fb4d8" font-size="12" font-family="Kanit">เส้นแรงแม่เหล็กออกจาก N</text>
+            <text x="60" y="266" fill="#5f7398" font-size="11" font-family="Kanit">เข้า S ในสนามของแม่เหล็กถาวร</text>
+          </svg>
+        </div>
+        <div class="figcap">สนามแม่เหล็ก B เป็นเวกเตอร์ หน่วยเทสลา (T) — เส้นแรงออกจากขั้ว N เข้าขั้ว S</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">อนุภาคประจุวิ่ง</div><div class="eq">\[ F = qvB\sin\theta \]</div>          <div class="lab">v : อัตราเร็ว (m/s) · F : แรง (N) · F ตั้งฉากกับทั้ง v และ B</div></div>
+          <div class="f-card"><div class="lab">ลวดตัวนำมีกระแส</div><div class="eq">\[ F = BIL\sin\theta \]</div><div class="lab">I : กระแส (A) · L : ความยาวลวด (m)</div></div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>วิธีคิดทิศ — กฎมือขวา</h3>
+          <ul class="clean">
+            <li>นิ้วชี้ทิศกระแส I, นิ้วกลางชี้ทิศสนาม B → นิ้วโป้งชี้ทิศแรง F</li>
+            <li>สำหรับอนุภาคประจุ: นิ้วชี้ทิศ v, นิ้วกลางชี้ทิศ B, นิ้วโป้งชี้ F</li>
+            <li>แรงแม่เหล็ก<b>ตั้งฉากกับทั้ง v และ B เสมอ</b> (เปลี่ยนทิศวิถี ไม่ทำงาน)</li>
+            <li>ประยุกต์: มอเตอร์ไฟฟ้าใช้แรงแม่เหล็กบิดขดลวดให้หมุน</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 34 : MAGNETIC FIELD FROM CURRENTS ================= -->
+<section class="slide" data-title="สนามแม่เหล็กจากกระแสไฟฟ้า" data-section="ม.5 · Magnetism">
+  <div class="stage">
+    <div class="kicker violet rise">15 · FIELD FROM CURRENTS</div>
+    <h2 class="t rise">สนามแม่เหล็ก<span class="grad">จากกระแสไฟฟ้า</span></h2>
+    <div class="cols c3 rise" style="margin-top:16px">
+      <div class="f-card">
+        <div class="f-star">ลวดตรง</div>
+        <div class="eq">\[ B=\dfrac{\mu_0 I}{2\pi r} = \dfrac{2\times10^{-7}\,I}{r} \]</div>
+        <div class="lab">B : สนาม (T) · r : ระยะจากลวด (m) · μ₀ = 4π×10⁻⁷ T·m/A</div>
+      </div>
+      <div class="f-card pur">
+        <div class="f-star">ขดลวดวงกลม (กลางขด)</div>
+        <div class="eq">\[ B=\dfrac{\mu_0 N I}{2r} \]</div>
+        <div class="lab">N : จำนวนรอบ · r : รัศมีขด (m)</div>
+      </div>
+      <div class="f-card">
+        <div class="f-star">โซลินอยด์</div>
+        <div class="eq">\[ B=\dfrac{\mu_0 N I}{L} \]</div>
+        <div class="lab">L : ความยาวโซลินอยด์ (m) · N : จำนวนรอบ</div>
+      </div>
+    </div>
+    <div class="cols c2 rise" style="margin-top:16px">
+      <div class="card accent">
+        <h3><span class="dot"></span>ทิศของสนาม — กฎมือขวา</h3>
+        <ul class="clean">
+          <li>ลวดตรง: จับลวดด้วยมือขวา นิ้วโป้งชี้ทิศกระแส → นิ้วอีกสี่นิ้วชี้ทิศวนของสนาม B</li>
+          <li>ขดลวด/โซลินอยด์: นิ้วสี่นิ้ววนตามทิศกระแสในขด → นิ้วโป้งชี้ขั้ว N</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>จุดเชื่อมโยง</h3>
+        <ul class="clean">
+          <li>กระแสไฟฟ้าสร้างสนามแม่เหล็กได้ — หลักการทำแม่เหล็กไฟฟ้า (electromagnet)</li>
+          <li>เพิ่มกระแส I, เพิ่มจำนวนรอบ N หรือใส่แกนเหล็ก ทำให้ B แรงขึ้น</li>
+          <li>โซลินอยด์ที่มีกระแส ทำหน้าที่เหมือนแม่เหล็กรูปทรงแท่ง</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 35 : FARADAY & LENZ ================= -->
+<section class="slide" data-title="การเหนี่ยวไฟฟ้า — ฟาราเดย์และเลนซ์" data-section="ม.5 · Magnetism">
+  <div class="stage">
+    <div class="kicker violet rise">15 · INDUCTION — FARADAY &amp; LENZ</div>
+    <h2 class="t rise">การเหนี่ยวไฟฟ้า<span class="grad"> — ฟาราเดย์ และ เลนซ์</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:14px">
+      <div>
+        <div class="cols c2">
+          <div class="f-card pur"><div class="lab">ฟลักซ์แม่เหล็ก</div><div class="eq">\[ \Phi_B = BA\cos\theta \]</div><div class="lab">Φ : ฟลักซ์ (Wb) · A : พื้นที่วง (m²) · θ : มุมระหว่าง B กับแนวฉากของวง</div></div>
+          <div class="f-card"><div class="lab">กฎฟาราเดย์</div><div class="eq">\[ \varepsilon = -N\dfrac{\Delta\Phi_B}{\Delta t} \]</div><div class="lab">ε : แรงเคลื่อนไฟฟ้าเหนี่ยวนำ (V) · N : จำนวนรอบขด</div></div>
+        </div>
+        <div class="card purple" style="margin-top:12px">
+          <h3><span class="dot"></span>กฎของเลนซ์ — กำหนดทิศของกระแสเหนี่ยวนำ</h3>
+          <ul class="clean">
+            <li>กระแสเหนี่ยวนำจะ<b class="hl">สร้างผลต้าน</b>กลับกับการเปลี่ยนแปลงฟลักซ์ที่สร้างมัน</li>
+            <li>ฟลักซ์เพิ่ม → กระแสเหนี่ยวนำทำฟลักซ์<b>ต้านเพิ่ม</b>; ฟลักซ์ลด → กระแสเหนี่ยวนำช่วย<b>คืนฟลักซ์</b></li>
+            <li>เครื่องหมายลบในกฎฟาราเดย์มาจากกฎของเลนซ์</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="nd" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#e879f9"/></marker>
+            <marker id="nd2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <g stroke="#a78bfa" stroke-width="3" fill="none">
+              <ellipse cx="200" cy="120" rx="46" ry="90"/>
+              <ellipse cx="200" cy="120" rx="34" ry="76" opacity=".7"/>
+            </g>
+            <circle cx="330" cy="120" r="20" fill="#182a4e" stroke="#7ff3ff" stroke-width="2"/>
+            <text x="330" y="127" fill="#7ff3ff" font-size="14" text-anchor="middle" font-weight="bold">N</text>
+            <line x1="306" y1="120" x2="262" y2="120" stroke="#e879f9" stroke-width="3" marker-end="url(#nd)"/>
+            <text x="284" y="108" fill="#f0abfc" font-size="13" text-anchor="middle" font-family="Kanit">แม่เหล็กเคลื่อนเข้า</text>
+            <path d="M200 230 A 0 0 0 0 0 200 230" fill="none"/>
+            <path d="M170 236 C 190 250, 240 250, 262 236" fill="none" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#nd2)" class="aflow"/>
+            <text x="216" y="266" fill="#7ff3ff" font-size="13" text-anchor="middle" font-family="Kanit">กระแสเหนี่ยวนำในขดลวด</text>
+            <text x="200" y="34" fill="#9fb4d8" font-size="13" text-anchor="middle" font-family="Kanit">แม่เหล็กเข้าใกล้ขดลวด → ฟลักซ์เพิ่ม → เกิด ε เหนี่ยวนำ</text>
+          </svg>
+        </div>
+        <div class="figcap">แม่เหล็กสอดเข้าขดลวด — ฟลักซ์เปลี่ยน เกิดแรงเคลื่อนไฟฟ้าเหนี่ยวนำ</div>
+      </div>
+    </div>
+    <div class="chips rise"><span class="chip">ประยุกต์: เจนเนอเรเตอร์ไฟฟ้า · หม้อแปลง · กระดิ่งไฟฟ้า · เตาเหนี่ยวนำ</span></div>
+  </div>
+</section>
+<!-- ================= SLIDE 36 : DIVIDER — WAVES LIGHT & SOUND ================= -->
+<section class="slide" data-title="ส่วนที่ 3 — คลื่น แสง และเสียง (ม.5)" data-section="ส่วนที่ 3">
+  <div class="stage" style="position:relative">
+    <div class="divider-num">03</div>
+    <div class="cols c2" style="align-items:center">
+      <div>
+        <div class="kicker blue rise">SECTION 3 · ฟิสิกส์ ม.5</div>
+        <h2 class="t rise" style="font-size:clamp(2.2rem,5.5vw,4.4rem)">WAVES<span class="grad"> · LIGHT · SOUND</span></h2>
+        <p class="lead rise">ทุกสิ่งรอบตัวเราสื่อสารด้วยคลื่น — แสงจากดวงอาทิตย์ เสียงจากเสียงพูด สัญญาณ WiFi ล้วนเป็นคลื่นที่เคลื่อนที่และส่งผ่านพลังงานจากที่หนึ่งไปอีกที่หนึ่ง</p>
+        <div class="chips rise">
+          <span class="chip">คลื่นกล</span><span class="chip">คลื่นแสง</span>
+          <span class="chip">การเลี้ยวเบน</span><span class="chip">เสียงและเรโซแนนซ์</span>
+        </div>
+      </div>
+      <div class="rise">
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="wvsine" x1="0" x2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#7db2ff"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+            <path d="M20 150 C 60 60, 100 60, 140 150 S 220 240, 260 150 S 340 60, 380 150 S 460 230, 500 150" fill="none" stroke="url(#wvsine)" stroke-width="3.4" class="aflow"/>
+            <line x1="80" y1="96" x2="80" y2="150" stroke="#f0abfc" stroke-width="2" stroke-dasharray="4 5"/>
+            <text x="80" y="86" fill="#f0abfc" font-size="12" text-anchor="middle" font-family="Kanit">A</text>
+            <line x1="80" y1="150" x2="340" y2="150" stroke="#5f7398" stroke-width="1.4" stroke-dasharray="5 6"/>
+            <text x="210" y="142" fill="#9fb4d8" font-size="12" text-anchor="middle" font-family="Kanit">λ (ความยาวคลื่น)</text>
+            <circle cx="370" cy="64" r="46" fill="#0a2740" stroke="#22d3ee" stroke-width="1.5" opacity=".5"/>
+            <path d="M370 64 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" fill="none" stroke="#22d3ee" stroke-width="1" opacity=".3" stroke-dasharray="3 6"/>
+            <circle cx="370" cy="64" r="7" fill="#22d3ee"/>
+            <text x="370" y="126" fill="#8fa3c8" font-size="11" text-anchor="middle" font-family="Kanit"></text>
+          </svg>
+        </div>
+        <div class="figcap">คลื่นส่งพลังงานโดยไม่ส่งมวลสารตัวกลาง — หัวใจของคลื่นทุกชนิด</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 37 : WAVE TYPES ================= -->
+<section class="slide" data-title="คลื่นตามขวางและตามยาว" data-section="ม.5 · Waves">
+  <div class="stage">
+    <div class="kicker blue rise">16 · WAVE TYPES</div>
+    <h2 class="t rise">คลื่นตามขวาง<span class="grad"> และ คลื่นตามยาว</span></h2>
+    <div class="cols c2 rise" style="margin-top:16px">
+      <div class="card accent">
+        <h3><span class="dot"></span>คลื่นตามขวาง (Transverse)</h3>
+        <p>การสั่นของตัวกลาง<b class="hl">ตั้งฉาก</b>กับทิศการเคลื่อนที่ของคลื่น</p>
+        <div class="fig" style="margin-top:10px">
+          <svg class="diagram" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="wv2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <line x1="15" y1="60" x2="385" y2="60" stroke="#2a4066" stroke-width="1.4" stroke-dasharray="4 5"/>
+            <path d="M15 60 C 45 14, 75 14, 105 60 S 165 106, 195 60 S 255 14, 285 60 S 345 106, 375 60" fill="none" stroke="#22d3ee" stroke-width="3" class="aflow"/>
+            <line x1="60" y1="30" x2="60" y2="56" stroke="#e879f9" stroke-width="2.2" marker-end="url(#wv2)"/>
+            <line x1="330" y1="92" x2="330" y2="66" stroke="#e879f9" stroke-width="2.2" marker-end="url(#wv2)"/>
+            <text x="150" y="18" fill="#7ff3ff" font-size="11" font-family="Kanit">ยอด (crest)</text>
+            <text x="245" y="112" fill="#c4b5fd" font-size="11" font-family="Kanit">ร่อง (trough)</text>
+          </svg>
+        </div>
+        <ul class="clean" style="margin-top:8px">
+          <li>ตัวอย่าง: คลื่นบนเสื่อวิ่งเชือก · คลื่นแสง · คลื่นแม่เหล็กไฟฟ้า</li>
+          <li>แสงเดินทางในสุญยากาศได้ (ไม่ต้องมีตัวกลาง)</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>คลื่นตามยาว (Longitudinal)</h3>
+        <p>การสั่นของตัวกลาง<b class="hlp">ขนาน</b>กับทิศการเคลื่อนที่ของคลื่น</p>
+        <div class="fig" style="margin-top:10px">
+          <svg class="diagram" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+            <line x1="15" y1="60" x2="385" y2="60" stroke="#2a4066" stroke-width="1.4" stroke-dasharray="4 5"/>
+            <g stroke="#a78bfa" stroke-width="2.4">
+              <line x1="30" y1="60" x2="41" y2="60"/><line x1="66" y1="60" x2="95" y2="60"/>
+              <line x1="119" y1="60" x2="134" y2="60"/><line x1="166" y1="60" x2="186" y2="60"/>
+              <line x1="214" y1="60" x2="222" y2="60"/><line x1="252" y1="60" x2="276" y2="60"/>
+              <line x1="300" y1="60" x2="330" y2="60"/><line x1="352" y1="60" x2="366" y2="60"/>
+            </g>
+            <ellipse cx="26" cy="60" rx="4" ry="26" fill="#7db2ff" opacity=".85"/>
+            <ellipse cx="57" cy="60" rx="9" ry="30" fill="#7db2ff" opacity=".95"/>
+            <ellipse cx="106" cy="60" rx="11" ry="32" fill="#22d3ee"/>
+            <ellipse cx="152" cy="60" rx="12" ry="33" fill="#22d3ee"/>
+            <ellipse cx="204" cy="60" rx="8" ry="30" fill="#7db2ff" opacity=".95"/>
+            <ellipse cx="236" cy="60" rx="5" ry="25" fill="#7db2ff" opacity=".85"/>
+            <ellipse cx="292" cy="60" rx="11" ry="32" fill="#22d3ee"/>
+            <ellipse cx="343" cy="60" rx="8" ry="29" fill="#7db2ff" opacity=".9"/>
+            <text x="106" y="112" fill="#7ff3ff" font-size="11" text-anchor="middle" font-family="Kanit">แอ่นหนา (compression)</text>
+            <text x="236" y="30" fill="#c4b5fd" font-size="11" text-anchor="middle" font-family="Kanit">แอ่นบาง (rarefaction)</text>
+          </svg>
+        </div>
+        <ul class="clean" style="margin-top:8px">
+          <li>ตัวอย่าง: คลื่นเสียง · คลื่นสปริงแอบรอ?เถาวัลย์</li>
+          <li>เสียงต้องมีตัวกลาง (ของแข็ง ของเหลว แก๊ส) เดินทางในสุญยากาศไม่ได้</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 38 : WAVE PROPERTIES ================= -->
+<section class="slide" data-title="คุณสมบัติของคลื่น" data-section="ม.5 · Waves">
+  <div class="stage">
+    <div class="kicker blue rise">16 · WAVE PROPERTIES</div>
+    <h2 class="t rise">คุณสมบัติของ<span class="grad">คลื่น</span></h2>
+    <div class="cols col-12-5 rise" style="margin-top:12px">
+      <div>
+        <div class="fig">
+          <svg class="diagram" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="wp" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#e879f9"/></marker>
+            <marker id="wq" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/></marker></defs>
+            <line x1="20" y1="130" x2="500" y2="130" stroke="#2a4066" stroke-width="1.4" stroke-dasharray="4 5"/>
+            <path d="M20 130 C 60 40, 100 40, 140 130 S 220 220, 260 130 S 340 40, 380 130 S 460 210, 500 130" fill="none" stroke="url(#wps)" stroke-width="3.2" class="aflow"/>
+            <defs><linearGradient id="wps" x1="0" x2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+            <line x1="60" y1="86" x2="60" y2="126" stroke="#e879f9" stroke-width="2.2" marker-end="url(#wp)"/>
+            <text x="42" y="104" fill="#f0abfc" font-size="14" font-family="Kanit">A</text>
+            <path d="M140 118 h120" stroke="#22d3ee" stroke-width="2.4" marker-start="url(#wq)" marker-end="url(#wq)"/>
+            <line x1="140" y1="108" x2="140" y2="146" stroke="#2a4066" stroke-width="1.2" stroke-dasharray="3 4"/>
+            <line x1="260" y1="108" x2="260" y2="146" stroke="#2a4066" stroke-width="1.2" stroke-dasharray="3 4"/>
+            <text x="200" y="102" fill="#7ff3ff" font-size="14" text-anchor="middle" font-family="Kanit">λ : ระยะจากยอดหนึ่งถึงยอดถัดไป</text>
+            <text x="380" y="66" fill="#7ff3ff" font-size="13" text-anchor="middle" font-family="Kanit">ยอด</text>
+            <text x="330" y="206" fill="#c4b5fd" font-size="13" text-anchor="middle" font-family="Kanit">ร่อง</text>
+          </svg>
+        </div>
+        <div class="figcap">A : ขนาดการสั่น · λ : ความยาวคลื่น (จากยอดถึงยอด หรือร่องถึงร่อง)</div>
+      </div>
+      <div>
+        <div class="cols c2">
+          <div class="f-card"><div class="lab">อัตราเร็วคลื่น</div><div class="eq">\[ v=f\lambda \]</div><div class="lab">v : อัตราเร็ว (m/s) · f : ความถี่ (Hz) · λ : ความยาวคลื่น (m)</div></div>
+          <div class="f-card pur"><div class="lab">คาบคลื่น</div><div class="eq">\[ T=\dfrac{1}{f} \qquad \lambda=vT \]</div><div class="lab">T : คาบ (เวลาที่คลื่นเคลื่อน 1 ความยาวคลื่น) (s)</div></div>
+        </div>
+        <div class="card accent" style="margin-top:12px">
+          <h3><span class="dot"></span>ความเข้าใจสำคัญ</h3>
+          <ul class="clean">
+            <li><b class="hl">ความถี่ f</b> ขึ้นกับแหล่งกำเนิด — เมื่อคลื่นไปตัวกลางอื่น f <b>ไม่เปลี่ยน</b></li>
+            <li><b class="hlp">ความเร็ว v</b> ขึ้นกับตัวกลาง — เปลี่ยนตัวกลางทำให้ λ เปลี่ยนตาม</li>
+            <li>คลื่น<b>ส่งพลังงาน</b>ไปกับการเคลื่อนที่ แต่ตัวกลางไม่เคลื่อนที่ติดไปด้วย</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= SLIDE 39 : WAVE PHENOMENA ================= -->
+<section class="slide" data-title="ปรากฏการณ์ของคลื่น" data-section="ม.5 · Waves">
+  <div class="stage">
+    <div class="kicker blue rise">16 · WAVE PHENOMENA</div>
+    <h2 class="t rise">ปรากฏการณ์<span class="grad">ของคลื่น</span></h2>
+    <div class="cols c2 rise" style="margin-top:14px">
+      <div class="card accent">
+        <h3><span class="dot"></span>การสะท้อน และ การหักเห</h3>
+        <ul class="clean">
+          <li><b class="hl">การสะท้อน (reflection)</b> — คลื่นชนอุปสรรคแล้วเด้งกลับตัวกลางเดิม</li>
+          <li><b class="hlp">การหักเห (refraction)</b> — คลื่นผ่านตัวกลางใหม่ v เปลี่ยน ทิศเบน (ผ่านตัวกลางหนาแน่นกว่า v ลดลง)</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3><span class="dot"></span>การเลี้ยวเบน และ การรบกวน</h3>
+        <ul class="clean">
+          <li><b class="hl">การเลี้ยวเบน (diffraction)</b> — คลื่นบิดโค้งหลบเมื่อผ่านช่องแคบหรือขอบสิ่งกีดขวาง (ช่องกว้างประมาณ λ ขึ้นไปจะเห็นชัด)</li>
+          <li><b class="hlp">การรบกวน (interference)</b> — สองคลื่นซ้อนทับกัน เกิดแนวสว่าง–มืดสลับกัน (รบกวนสร้างสรรค์ / รบกวนทำลาย)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent rise" style="margin-top:14px">
+      <h3><span class="dot"></span>คลื่นนิ่ง (Standing Waves) — ลวดสองปลายยึดตรง ยาว L</h3>
+      <div class="cols c2">
+        <div class="f-card">
+          <div class="lab">เงื่อนไขการเกิด</div>
+          <div class="eq">\[ \lambda_n = \dfrac{2L}{n}, \qquad f_n = \dfrac{nv}{2L} \]</div>
+          <div class="lab">n = 1, 2, 3, … · v : อัตราเร็วคลื่นบนลวด</div>
+        </div>
+        <div>
+          <ul class="clean">
+            <li><b class="hl">ปม (node)</b> — จุดที่ไม่สั่น (อยู่กับที่)</li>
+            <li><b class="hlp">ท้องคลื่น (antinode)</b> — จุดที่สั่นมากที่สุด</li>
+            <li>n = 1 คือความถี่พื้นฐาน (fundamental); n เพิ่ม → ความถี่เพิ่มเป็นทวีคูณ (harmonics)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--@@SLIDES@@-->
+</main>
+<!-- ================= CONTROLS ================= -->
+<div id="ctrls2">
+  <button class="btn" id="btnOv" title="Overview (O)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+  </button>
+  <button class="btn" id="btnFs" title="Fullscreen (F)">
+    <svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>
+  </button>
+</div>
+<div id="ctrls">
+  <button class="btn" id="btnPrev" title="Previous (←)">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <span id="counter"><b>1</b> / 1</span>
+  <button class="btn" id="btnNext" title="Next (→ / Space)">
+    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+<div id="hint">← → เลื่อนสไลด์ · SPACE ต่อไป · F เต็มจอ · O ภาพรวม · HOME/END หัว-ท้าย</div>
+<div id="overview">
+  <h2>SLIDE <span class="grad">OVERVIEW</span> — คลิกเพื่อไปยังสไลด์</h2>
+  <div class="ov-grid" id="ovGrid"></div>
+</div>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck');
+  var slides=[].slice.call(deck.querySelectorAll('.slide'));
+  var N=slides.length;
+  var progress=document.getElementById('progress');
+  var counter=document.getElementById('counter');
+  var ov=document.getElementById('overview');
+  var ovGrid=document.getElementById('ovGrid');
+  var cur=0;
+
+  var stars=document.getElementById('stars');
+  for(var i=0;i<70;i++){
+    var s=document.createElement('span');
+    s.style.left=(Math.random()*100)+'%';
+    s.style.top=(Math.random()*100)+'%';
+    s.style.animationDelay=(Math.random()*4)+'s';
+    s.style.opacity=0.2+Math.random()*0.55;
+    var sz=(Math.random()*2+1)+'px';
+    s.style.width=sz; s.style.height=sz;
+    stars.appendChild(s);
+  }
+
+  slides.forEach(function(s,i){
+    var item=document.createElement('div');
+    item.className='ov-item';
+    item.innerHTML='<span class="num">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<span class="tag">'+(s.dataset.section||'')+'</span>'+
+      '<span class="title">'+(s.dataset.title||('Slide '+(i+1)))+'</span>';
+    item.addEventListener('click',function(){go(i);closeOv();});
+    ovGrid.appendChild(item);
+  });
+  var ovItems=[].slice.call(ovGrid.children);
+
+  function apply(){
+    slides.forEach(function(s,i){
+      s.classList.toggle('active',i===cur);
+      s.classList.toggle('is-left',i<cur);
+      s.classList.toggle('is-right',i>cur);
+    });
+    progress.style.width=((cur+1)/N*100)+'%';
+    counter.innerHTML='<b>'+(cur+1)+'</b> / '+N;
+    ovItems.forEach(function(el,i){el.classList.toggle('current',i===cur);});
+  }
+  function go(n){cur=Math.max(0,Math.min(N-1,n));apply();}
+  function next(){go(cur+1);}
+  function prev(){go(cur-1);}
+  window.ppGo=go;
+
+  document.getElementById('btnPrev').addEventListener('click',prev);
+  document.getElementById('btnNext').addEventListener('click',next);
+  document.getElementById('btnOv').addEventListener('click',function(){ov.classList.toggle('open');});
+  document.getElementById('btnFs').addEventListener('click',toggleFs);
+  function toggleFs(){
+    if(document.fullscreenElement){document.exitFullscreen();}
+    else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen().catch(function(){});}
+    else if(document.documentElement.webkitRequestFullscreen){document.documentElement.webkitRequestFullscreen();}
+  }
+  function closeOv(){ov.classList.remove('open');}
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+    else if(e.key==='Home'){e.preventDefault();go(0);}
+    else if(e.key==='End'){e.preventDefault();go(N-1);}
+    else if(e.key==='f'||e.key==='F'){toggleFs();}
+    else if(e.key==='o'||e.key==='O'){ov.classList.toggle('open');}
+    else if(e.key==='Escape'){closeOv();}
+  });
+
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){
+    tx=e.touches[0].clientX; ty=e.touches[0].clientY;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    var dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){ if(dx<0){next();}else{prev();} }
+  },{passive:true});
+
+  document.addEventListener('click',function(e){
+    var t=e.target.closest?e.target.closest('[data-goto]'):null;
+    if(t&&t.dataset.goto){go(parseInt(t.dataset.goto,10)-1);}
+    if(e.target===ov){closeOv();}
+  });
+
+  apply();
+})();
+</script>
+</body>
+</html>
